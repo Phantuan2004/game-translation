@@ -1,0 +1,40 @@
+{
+  "monitor_index": 1,
+  "capture_region": {
+    "left": 0,
+    "top": 0,
+    "width": 300,
+    "height": 150
+  },
+  "capture_interval_ms": 150,
+  "ocr_enabled": true,
+  "ocr_confidence_threshold": 0.5,
+  "source_language": "auto",
+  "target_language": "vi",
+  "translation_provider": "google",
+  "translation_api_key": "",
+  "translation_timeout_sec": 3.0,
+  "overlay_enabled": true,
+  "overlay_position": {
+    "x": 495,
+    "y": 336
+  },
+  "overlay_size": {
+    "width": 800,
+    "height": 180
+  },
+  "overlay_font_size": 18,
+  "overlay_text_color": "#FFFFFF",
+  "overlay_bg_color": "#121212",
+  "overlay_bg_opacity": 0.8,
+  "overlay_click_through": false,
+  "overlay_show_original": true,
+  "txt_output_enabled": true,
+  "txt_output_path": "C:\\Users\\phanh\\OneDrive\\Máy tính\\Code\\game translate\\test_run_output.txt",
+  "hotkeys": {
+    "toggle_overlay": "F8",
+    "pause_resume_capture": "F9",
+    "translate_manual": "F10",
+    "clear_translation": "F11"
+  }
+}

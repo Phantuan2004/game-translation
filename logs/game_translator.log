@@ -1,0 +1,28 @@
+2026-11-23 22:26:05,553 [INFO] [main]: Starting Game Translator Application...
+2026-11-23 22:26:05,620 [INFO] [app.settings_manager]: Successfully loaded settings from config\settings.json
+2026-11-23 22:40:59,680 [INFO] [main]: Starting Game Translator Application...
+2026-11-23 22:40:59,746 [INFO] [app.settings_manager]: Successfully loaded settings from config\settings.json
+2026-11-23 22:40:59,820 [INFO] [app.hotkey_manager]: Registered global hotkey F8 (ID 1001)
+2026-11-23 22:40:59,821 [INFO] [app.hotkey_manager]: Registered global hotkey F9 (ID 1002)
+2026-11-23 22:40:59,821 [INFO] [app.hotkey_manager]: Registered global hotkey F10 (ID 1003)
+2026-11-23 22:40:59,832 [INFO] [app.hotkey_manager]: Registered global hotkey F11 (ID 1004)
+2026-11-23 22:41:05,094 [INFO] [overlay.translation_overlay]: Overlay click-through set to: True
+2026-11-23 23:05:02,983 [INFO] [main]: Starting Game Translator Application...
+2026-11-23 23:05:03,043 [INFO] [app.settings_manager]: Successfully loaded settings from config\settings.json
+2026-11-23 23:05:03,114 [INFO] [app.hotkey_manager]: Registered global hotkey F8 (ID 1001)
+2026-11-23 23:05:03,114 [INFO] [app.hotkey_manager]: Registered global hotkey F9 (ID 1002)
+2026-11-23 23:05:03,114 [INFO] [app.hotkey_manager]: Registered global hotkey F10 (ID 1003)
+2026-11-23 23:05:03,115 [INFO] [app.hotkey_manager]: Registered global hotkey F11 (ID 1004)
+2026-11-23 23:05:09,985 [INFO] [overlay.translation_overlay]: Overlay click-through set to: False
+2026-11-23 23:05:29,009 [INFO] [workers.translation_worker]: TranslationWorker thread started with provider: Google Translate (Free)
+2026-11-23 23:05:29,009 [INFO] [workers.ocr_worker]: OCRWorker thread started.
+2026-11-23 23:05:29,009 [INFO] [workers.capture_worker]: CaptureWorker thread started.
+2026-11-23 23:05:29,109 [INFO] [ocr.ocr_engine]: AutoOCREngine selected: Windows Media OCR (Fast)
+2026-11-23 23:05:29,146 [INFO] [ocr.dialogue_detector]: New dialogue detected [Seq 1]: 'Game Translator - Real-time Dialogue Translation GAME TRANSLATOR Capture Settings (Milestone 1) Real-Time' (conf: 0.95)
+2026-11-23 23:05:30,172 [INFO] [app.main_window]: Translation displayed [Seq 1]: 'Game Translator - Dịch hội thoại trong thời gian thực Cài đặt chụp ảnh của NGƯỜI DỊCH TRÒ CHƠI (Cột mốc 1) Thời gian thực' ([LIVE] in 1007.0 ms)
+2026-11-23 23:05:32,321 [INFO] [workers.capture_worker]: CaptureWorker thread exited.
+2026-11-23 23:05:32,324 [INFO] [workers.capture_worker]: CaptureWorker stopped.
+2026-11-23 23:05:32,325 [INFO] [workers.ocr_worker]: OCRWorker thread exited.
+2026-11-23 23:05:32,328 [INFO] [workers.ocr_worker]: OCRWorker stopped.
+2026-11-23 23:05:32,328 [INFO] [workers.translation_worker]: TranslationWorker thread exited.
+2026-11-23 23:05:32,333 [INFO] [workers.translation_worker]: TranslationWorker stopped.

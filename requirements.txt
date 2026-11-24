@@ -1,0 +1,8 @@
+PyQt6>=6.6.0
+mss>=10.0.0
+numpy>=2.0.0
+pillow>=10.0.0
+pytest>=8.0.0
+opencv-python>=4.8.0
+rapidocr-onnxruntime>=1.2.0
+winocr>=0.0.15
