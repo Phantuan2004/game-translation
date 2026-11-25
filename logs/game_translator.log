@@ -26,3 +26,13 @@
 2026-11-23 23:05:32,328 [INFO] [workers.ocr_worker]: OCRWorker stopped.
 2026-11-23 23:05:32,328 [INFO] [workers.translation_worker]: TranslationWorker thread exited.
 2026-11-23 23:05:32,333 [INFO] [workers.translation_worker]: TranslationWorker stopped.
+2026-11-25 11:04:01,013 [INFO] [main]: Starting Game Translator Application...
+2026-11-25 11:04:01,040 [INFO] [app.settings_manager]: Successfully loaded settings from config\settings.json
+2026-11-25 11:04:17,498 [INFO] [main]: Starting Game Translator Application...
+2026-11-25 11:04:17,516 [INFO] [app.settings_manager]: Successfully loaded settings from config\settings.json
+2026-11-25 11:09:21,290 [INFO] [main]: Starting Game Translator Application...
+2026-11-25 11:09:21,312 [INFO] [app.settings_manager]: Successfully loaded settings from config\settings.json
+2026-11-25 11:09:21,369 [INFO] [app.hotkey_manager]: Registered global hotkey F8 (ID 1001)
+2026-11-25 11:09:21,370 [INFO] [app.hotkey_manager]: Registered global hotkey F9 (ID 1002)
+2026-11-25 11:09:21,370 [INFO] [app.hotkey_manager]: Registered global hotkey F10 (ID 1003)
+2026-11-25 11:09:21,370 [INFO] [app.hotkey_manager]: Registered global hotkey F11 (ID 1004)

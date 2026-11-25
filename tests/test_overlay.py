@@ -1,6 +1,6 @@
 import pytest
-from PyQt6.QtWidgets import QApplication
-from PyQt6.QtCore import Qt
+from PySide6.QtWidgets import QApplication
+from PySide6.QtCore import Qt
 from app.settings_manager import SettingsManager
 from overlay.translation_overlay import TranslationOverlay, GWL_EXSTYLE, WS_EX_TRANSPARENT
 import ctypes

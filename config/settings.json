@@ -16,8 +16,8 @@
   "translation_timeout_sec": 3.0,
   "overlay_enabled": true,
   "overlay_position": {
-    "x": 495,
-    "y": 336
+    "x": 623,
+    "y": 481
   },
   "overlay_size": {
     "width": 800,
@@ -30,7 +30,7 @@
   "overlay_click_through": false,
   "overlay_show_original": true,
   "txt_output_enabled": true,
-  "txt_output_path": "C:\\Users\\phanh\\OneDrive\\Máy tính\\Code\\game translate\\test_run_output.txt",
+  "txt_output_path": "game_translation.txt",
   "hotkeys": {
     "toggle_overlay": "F8",
     "pause_resume_capture": "F9",

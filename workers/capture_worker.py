@@ -1,8 +1,8 @@
 import logging
 import time
 from typing import Dict, Optional
-from PyQt6.QtCore import QThread, pyqtSignal, QMutex, QMutexLocker
-from PyQt6.QtGui import QImage
+from PySide6.QtCore import QThread, Signal, QMutex, QMutexLocker
+from PySide6.QtGui import QImage
 
 from capture.screen_capture import ScreenCapture
 
@@ -14,10 +14,10 @@ class CaptureWorker(QThread):
 
     # Signals:
     # frame_ready(QImage for UI preview, np.ndarray BGRA for OCR/pipeline, latency_ms)
-    frame_ready = pyqtSignal(QImage, object, float)
-    fps_updated = pyqtSignal(float, float)  # (fps, avg_latency_ms)
-    status_changed = pyqtSignal(bool, bool)  # (is_running, is_paused)
-    error_occurred = pyqtSignal(str)
+    frame_ready = Signal(QImage, object, float)
+    fps_updated = Signal(float, float)  # (fps, avg_latency_ms)
+    status_changed = Signal(bool, bool)  # (is_running, is_paused)
+    error_occurred = Signal(str)
 
     def __init__(self, region: Optional[Dict[str, int]] = None, interval_ms: int = 150, parent=None):
         super().__init__(parent)

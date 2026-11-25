@@ -12,21 +12,44 @@ class TxtWriter:
     """Thread-safe writer for persisting chronological dialogue translations to a UTF-8 text file."""
 
     def __init__(self, file_path: str = "game_translation.txt"):
-        self.file_path = Path(file_path)
+        self.file_path = Path(file_path) if file_path else Path("game_translation.txt")
         self._lock = threading.Lock()
         self._last_original: str = ""
         self._last_seq_id: int = 0
-        self._ensure_parent_dir()
+        if not self._ensure_parent_dir():
+            fallback = Path("game_translation.txt")
+            logger.warning(
+                "Falling back from inaccessible TXT output path '%s' to '%s'.",
+                self.file_path,
+                fallback,
+            )
+            self.file_path = fallback
+            self._ensure_parent_dir()
 
     def set_file_path(self, new_path: str):
         with self._lock:
-            self.file_path = Path(new_path)
-            self._ensure_parent_dir()
-            logger.info("TxtWriter file path changed to: %s", self.file_path)
+            target = Path(new_path) if new_path else Path("game_translation.txt")
+            try:
+                if target.parent:
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                self.file_path = target
+                logger.info("TxtWriter file path changed to: %s", self.file_path)
+            except OSError as e:
+                logger.warning(
+                    "Cannot use TXT output path '%s' (%s). Keeping '%s'.",
+                    target,
+                    e,
+                    self.file_path,
+                )
 
-    def _ensure_parent_dir(self):
-        if self.file_path.parent:
-            self.file_path.parent.mkdir(parents=True, exist_ok=True)
+    def _ensure_parent_dir(self) -> bool:
+        try:
+            if self.file_path.parent:
+                self.file_path.parent.mkdir(parents=True, exist_ok=True)
+            return True
+        except OSError as e:
+            logger.warning("Failed to prepare directory for '%s': %s", self.file_path, e)
+            return False
 
     def append_dialogue(
         self,

@@ -1,7 +1,7 @@
 import time
 import logging
 from typing import Optional
-from PyQt6.QtCore import QThread, pyqtSignal, QMutex, QMutexLocker, QWaitCondition
+from PySide6.QtCore import QThread, Signal, QMutex, QMutexLocker, QWaitCondition
 
 from translation.translation_cache import TranslationCache
 from translation.translation_scheduler import TranslationScheduler, TranslationTask
@@ -21,10 +21,10 @@ class TranslationWorker(QThread):
 
     # Signals
     # translation_ready(seq_id, original_text, translated_text, latency_ms, is_cached)
-    translation_ready = pyqtSignal(int, str, str, float, bool)
-    translation_stale_discarded = pyqtSignal(int)  # seq_id
-    translation_failed = pyqtSignal(int, str, str)  # seq_id, original_text, error_msg
-    status_updated = pyqtSignal(str)
+    translation_ready = Signal(int, str, str, float, bool)
+    translation_stale_discarded = Signal(int)  # seq_id
+    translation_failed = Signal(int, str, str)  # seq_id, original_text, error_msg
+    status_updated = Signal(str)
 
     def __init__(
         self,

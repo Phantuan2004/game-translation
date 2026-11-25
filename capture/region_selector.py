@@ -1,8 +1,8 @@
 import logging
 from typing import Dict, Optional
-from PyQt6.QtCore import Qt, QRect, QPoint, pyqtSignal
-from PyQt6.QtGui import QPainter, QColor, QPen, QBrush, QFont, QGuiApplication
-from PyQt6.QtWidgets import QWidget
+from PySide6.QtCore import Qt, QRect, QPoint, Signal
+from PySide6.QtGui import QPainter, QColor, QPen, QBrush, QFont, QGuiApplication
+from PySide6.QtWidgets import QWidget
 
 logger = logging.getLogger(__name__)
 
@@ -10,8 +10,8 @@ logger = logging.getLogger(__name__)
 class RegionSelector(QWidget):
     """Fullscreen semi-transparent overlay widget for selecting a screen capture region."""
 
-    region_selected = pyqtSignal(dict)
-    selection_cancelled = pyqtSignal()
+    region_selected = Signal(dict)
+    selection_cancelled = Signal()
 
     def __init__(self, parent=None):
         super().__init__(parent)

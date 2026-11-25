@@ -1,8 +1,8 @@
 import time
 import pytest
 import numpy as np
-from PyQt6.QtWidgets import QApplication
-from PyQt6.QtGui import QImage
+from PySide6.QtWidgets import QApplication
+from PySide6.QtGui import QImage
 from capture.screen_capture import ScreenCapture
 from workers.capture_worker import CaptureWorker
 

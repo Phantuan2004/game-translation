@@ -78,3 +78,20 @@ def test_txt_writer_change_file_path(tmp_path):
     writer.append_dialogue(2, "Text 2", "Dịch 2")
     assert file2.exists()
     assert "Text 2" in file2.read_text(encoding="utf-8")
+
+
+def test_txt_writer_inaccessible_path_fallback(monkeypatch, tmp_path):
+    monkeypatch.chdir(tmp_path)
+    # Null byte or invalid path on Windows triggers OSError/ValueError? Use monkeypatched mkdir to simulate PermissionError
+    orig_mkdir = Path.mkdir
+
+    def fake_mkdir(self, *args, **kwargs):
+        if "blocked_user" in str(self):
+            raise PermissionError("Access is denied")
+        return orig_mkdir(self, *args, **kwargs)
+
+    monkeypatch.setattr(Path, "mkdir", fake_mkdir)
+    writer = TxtWriter(r"C:\Users\blocked_user\Desktop\out.txt")
+    assert writer.file_path == Path("game_translation.txt")
+    assert writer.append_dialogue(1, "Hello", "Xin chào") is True
+    assert (tmp_path / "game_translation.txt").exists()

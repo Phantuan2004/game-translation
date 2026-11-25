@@ -2,7 +2,7 @@ import time
 import cv2
 import numpy as np
 import pytest
-from PyQt6.QtWidgets import QApplication
+from PySide6.QtWidgets import QApplication
 from app.settings_manager import SettingsManager
 from app.main_window import MainWindow
 

@@ -2,8 +2,8 @@ import logging
 import time
 from typing import Any, Dict, List, Optional, Tuple
 import numpy as np
-from PyQt6.QtCore import QRect
-from PyQt6.QtGui import QImage, QPixmap, QGuiApplication
+from PySide6.QtCore import QRect
+from PySide6.QtGui import QImage, QPixmap, QGuiApplication
 
 logger = logging.getLogger(__name__)
 
@@ -110,10 +110,9 @@ class ScreenCapture:
 
             # Convert QImage buffer directly to NumPy array
             w, h = qimage.width(), qimage.height()
-            ptr = qimage.bits()
-            ptr.setsize(h * w * 4)
+            ptr = qimage.constBits()
             # Memory layout: Format_ARGB32 in little endian is BGRA
-            bgra_array = np.frombuffer(ptr, dtype=np.uint8).reshape((h, w, 4)).copy()
+            bgra_array = np.frombuffer(ptr, dtype=np.uint8, count=h * w * 4).reshape((h, w, 4)).copy()
             return qimage, bgra_array, latency_ms
 
         # Fallback to MSS if QScreen is not available
@@ -130,7 +129,7 @@ class ScreenCapture:
 
     @staticmethod
     def frame_to_qimage(frame: np.ndarray) -> QImage:
-        """Converts a BGRA numpy array into a PyQt6 QImage."""
+        """Converts a BGRA numpy array into a PySide6 QImage."""
         if frame is None or frame.size == 0:
             return QImage()
         height, width, channels = frame.shape

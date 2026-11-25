@@ -1,5 +1,5 @@
 import pytest
-from PyQt6.QtWidgets import QApplication
+from PySide6.QtWidgets import QApplication
 from app.hotkey_manager import HotkeyManager, VK_MAP
 
 

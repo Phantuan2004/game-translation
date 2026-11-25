@@ -8,7 +8,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import cv2
 import numpy as np
-from PyQt6.QtWidgets import QApplication
+from PySide6.QtWidgets import QApplication
 
 from capture.screen_capture import ScreenCapture
 from ocr.change_detector import ImageChangeDetector

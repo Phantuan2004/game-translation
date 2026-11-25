@@ -2,7 +2,7 @@ import time
 import cv2
 import numpy as np
 import pytest
-from PyQt6.QtWidgets import QApplication
+from PySide6.QtWidgets import QApplication
 
 from ocr.ocr_engine import get_ocr_engine
 from workers.ocr_worker import OCRWorker

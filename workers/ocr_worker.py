@@ -2,7 +2,7 @@ import time
 import logging
 from typing import Optional
 import numpy as np
-from PyQt6.QtCore import QThread, pyqtSignal, QMutex, QMutexLocker, QWaitCondition
+from PySide6.QtCore import QThread, Signal, QMutex, QMutexLocker, QWaitCondition
 
 from ocr.ocr_engine import BaseOCREngine, get_ocr_engine
 from ocr.change_detector import ImageChangeDetector
@@ -19,10 +19,10 @@ class OCRWorker(QThread):
 
     # Signals
     # dialogue_detected(seq_id: int, original_text: str, confidence: float, latency_ms: float)
-    dialogue_detected = pyqtSignal(int, str, float, float)
-    ocr_skipped = pyqtSignal(float)  # diff_score
-    ocr_completed = pyqtSignal(str, float, float)  # text, confidence, latency_ms
-    error_occurred = pyqtSignal(str)
+    dialogue_detected = Signal(int, str, float, float)
+    ocr_skipped = Signal(float)  # diff_score
+    ocr_completed = Signal(str, float, float)  # text, confidence, latency_ms
+    error_occurred = Signal(str)
 
     def __init__(
         self,

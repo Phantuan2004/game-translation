@@ -3,8 +3,8 @@ import logging
 from ctypes import wintypes
 from typing import Dict, Optional, Callable
 
-from PyQt6.QtCore import QObject, pyqtSignal, QAbstractNativeEventFilter
-from PyQt6.QtWidgets import QApplication
+from PySide6.QtCore import QObject, Signal, QAbstractNativeEventFilter
+from PySide6.QtWidgets import QApplication
 
 logger = logging.getLogger(__name__)
 
@@ -47,10 +47,10 @@ class _WindowsNativeHotkeyFilter(QAbstractNativeEventFilter):
 class HotkeyManager(QObject):
     """Manages system-wide Windows global hotkeys for gameplay control."""
 
-    toggle_overlay = pyqtSignal()
-    pause_resume = pyqtSignal()
-    manual_translate = pyqtSignal()
-    clear_translation = pyqtSignal()
+    toggle_overlay = Signal()
+    pause_resume = Signal()
+    manual_translate = Signal()
+    clear_translation = Signal()
 
     HOTKEY_IDS = {
         1001: "toggle_overlay",

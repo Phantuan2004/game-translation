@@ -51,3 +51,32 @@ def test_settings_validation(tmp_path):
     # Validation should fix interval and invalidate negative width
     assert mgr.get("capture_interval_ms") == DEFAULT_SETTINGS["capture_interval_ms"]
     assert mgr.get("capture_region") is None
+
+
+def test_settings_inaccessible_txt_path_fallback(monkeypatch, tmp_path):
+    cfg_file = tmp_path / "settings.json"
+    bad_data = {
+        "txt_output_path": "C:\\Users\\phanh\\OneDrive\\Máy tính\\Code\\game translate\\test_run_output.txt",
+    }
+    with open(cfg_file, "w", encoding="utf-8") as f:
+        json.dump(bad_data, f)
+
+    orig_mkdir = Path.mkdir
+
+    def fake_mkdir(self, *args, **kwargs):
+        if "phanh" in str(self):
+            raise PermissionError("Access is denied")
+        return orig_mkdir(self, *args, **kwargs)
+
+    monkeypatch.setattr(Path, "mkdir", fake_mkdir)
+    mgr = SettingsManager(str(cfg_file))
+    assert mgr.get("txt_output_path") == DEFAULT_SETTINGS["txt_output_path"]
+
+
+def test_settings_empty_txt_path_fallback(tmp_path):
+    cfg_file = tmp_path / "settings.json"
+    with open(cfg_file, "w", encoding="utf-8") as f:
+        json.dump({"txt_output_path": "   "}, f)
+
+    mgr = SettingsManager(str(cfg_file))
+    assert mgr.get("txt_output_path") == DEFAULT_SETTINGS["txt_output_path"]

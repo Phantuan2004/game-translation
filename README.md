@@ -11,7 +11,7 @@ A lightweight, low-latency Windows desktop utility that captures dialogue text d
   - Real-time capture preview with aspect-ratio scaling
   - Non-blocking background capture worker (`QThread`) with live latency and FPS metrics
   - Safe JSON configuration persistence with validation and corrupt file recovery
-  - Modern dark-themed Windows UI (PyQt6)
+  - Modern dark-themed Windows UI (PySide6)
 
 - **Milestone 2 (Completed):**
   - Pluggable local OCR engine architecture:

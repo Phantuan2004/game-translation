@@ -3,9 +3,9 @@ import sys
 import logging
 from typing import Optional
 
-from PyQt6.QtCore import Qt, pyqtSlot
-from PyQt6.QtGui import QIcon, QPixmap, QImage, QColor
-from PyQt6.QtWidgets import (
+from PySide6.QtCore import Qt, Slot
+from PySide6.QtGui import QIcon, QPixmap, QImage, QColor
+from PySide6.QtWidgets import (
     QMainWindow,
     QWidget,
     QVBoxLayout,
@@ -612,7 +612,7 @@ class MainWindow(QMainWindow):
     def _on_click_select_region(self):
         self.region_selector.start_selection()
 
-    @pyqtSlot(dict)
+    @Slot(dict)
     def _on_region_selected(self, region: dict):
         self._update_region_ui(region)
         self.settings.set("capture_region", region)
@@ -622,7 +622,7 @@ class MainWindow(QMainWindow):
             self.ocr_worker.reset_detectors()
         self.status_label.setText("Region selected.")
 
-    @pyqtSlot()
+    @Slot()
     def _on_region_selection_cancelled(self):
         self.status_label.setText("Region selection cancelled.")
 
@@ -837,7 +837,7 @@ class MainWindow(QMainWindow):
             self.translation_worker.stop()
             self.translation_worker = None
 
-    @pyqtSlot(QImage, object, float)
+    @Slot(QImage, object, float)
     def _on_frame_ready(self, qimage: QImage, frame_array, latency_ms: float):
         if not qimage.isNull():
             target_size = self.preview_label.size()
@@ -855,7 +855,7 @@ class MainWindow(QMainWindow):
         if self.ocr_worker and self.ocr_enable_cb.isChecked():
             self.ocr_worker.enqueue_frame(frame_array)
 
-    @pyqtSlot(int, str, float, float)
+    @Slot(int, str, float, float)
     def _on_dialogue_detected(self, seq_id: int, text: str, confidence: float, latency_ms: float):
         self.seq_badge.setText(f"Seq: #{seq_id}")
         self.detected_text_edit.setPlainText(text)
@@ -871,7 +871,7 @@ class MainWindow(QMainWindow):
             sl, tl = self._get_lang_codes()
             self.translation_worker.request_translation(seq_id, text, src_lang=sl, tgt_lang=tl)
 
-    @pyqtSlot(int, str, str, float, bool)
+    @Slot(int, str, str, float, bool)
     def _on_translation_ready(self, seq_id: int, orig: str, trans: str, latency_ms: float, is_cached: bool):
         self.translated_text_edit.setPlainText(trans)
         cache_str = "[CACHED]" if is_cached else "[LIVE]"
@@ -889,7 +889,7 @@ class MainWindow(QMainWindow):
 
         logger.info("Translation displayed [Seq %d]: '%s' (%s in %.1f ms)", seq_id, trans, cache_str, latency_ms)
 
-    @pyqtSlot(int)
+    @Slot(int)
     def _on_translation_stale(self, seq_id: int):
         logger.info("Discarded stale translation result [Seq %d] to protect newer live dialogue.", seq_id)
         # Record skipped in TXT history if dialogue text was registered
@@ -897,7 +897,7 @@ class MainWindow(QMainWindow):
             orig = self._dialogue_cache_by_seq[seq_id]
             self.txt_writer.append_dialogue(seq_id, orig, "", status="skipped")
 
-    @pyqtSlot(int, str, str)
+    @Slot(int, str, str)
     def _on_translation_failed(self, seq_id: int, orig: str, err_msg: str):
         self.status_label.setText(f"Translation #{seq_id} failed: {err_msg}")
         self.cache_badge.setText("[FAILED]")
@@ -905,21 +905,21 @@ class MainWindow(QMainWindow):
         if self.txt_cb.isChecked():
             self.txt_writer.append_dialogue(seq_id, orig, err_msg, status="failed")
 
-    @pyqtSlot(str, float, float)
+    @Slot(str, float, float)
     def _on_ocr_completed(self, text: str, confidence: float, latency_ms: float):
         self.hud_ocr_lat_label.setText(f"OCR: {latency_ms:.1f} ms")
         self.ocr_status_label.setText(f"Last OCR: {latency_ms:.1f} ms")
 
-    @pyqtSlot(float)
+    @Slot(float)
     def _on_ocr_skipped(self, diff_score: float):
         self.ocr_status_label.setText(f"Static (diff: {diff_score:.1f})")
 
-    @pyqtSlot(float, float)
+    @Slot(float, float)
     def _on_fps_updated(self, fps: float, avg_latency: float):
         self.hud_fps_label.setText(f"FPS: {fps:.1f}")
         self.perf_label.setText(f"Capture: Active | Cap: {avg_latency:.1f} ms | FPS: {fps:.1f}")
 
-    @pyqtSlot(bool, bool)
+    @Slot(bool, bool)
     def _on_capture_status_changed(self, is_running: bool, is_paused: bool):
         if is_running and not is_paused:
             self.state_badge.setText("CAPTURING")
@@ -959,12 +959,12 @@ class MainWindow(QMainWindow):
             self.hud_trans_lat_label.setText("Trans: -- ms")
             self.perf_label.setText("Capture: Idle | Cap: -- ms | OCR: -- ms | Trans: -- ms | FPS: 0.0")
 
-    @pyqtSlot(str)
+    @Slot(str)
     def _on_capture_error(self, err_msg: str):
         self.status_label.setText(f"Capture Error: {err_msg}")
         logger.error("Capture worker error: %s", err_msg)
 
-    @pyqtSlot(str)
+    @Slot(str)
     def _on_ocr_error(self, err_msg: str):
         self.status_label.setText(f"OCR Error: {err_msg}")
         logger.error("OCR worker error: %s", err_msg)

@@ -2,9 +2,9 @@ import ctypes
 import logging
 from typing import Optional, Dict, Any
 
-from PyQt6.QtCore import Qt, QPoint, QRect, pyqtSignal
-from PyQt6.QtGui import QColor, QFont, QPainter, QBrush, QPen
-from PyQt6.QtWidgets import (
+from PySide6.QtCore import Qt, QPoint, QRect, Signal
+from PySide6.QtGui import QColor, QFont, QPainter, QBrush, QPen
+from PySide6.QtWidgets import (
     QWidget,
     QVBoxLayout,
     QHBoxLayout,
@@ -28,8 +28,8 @@ WS_EX_LAYERED = 0x00080000
 class TranslationOverlay(QWidget):
     """Transparent floating overlay for displaying real-time game dialogue translations."""
 
-    position_changed = pyqtSignal(dict)  # {"x": int, "y": int, "width": int, "height": int}
-    lock_toggled = pyqtSignal(bool)  # is_locked (click-through)
+    position_changed = Signal(dict)  # {"x": int, "y": int, "width": int, "height": int}
+    lock_toggled = Signal(bool)  # is_locked (click-through)
 
     def __init__(self, settings_manager: Optional[SettingsManager] = None, parent=None):
         super().__init__(parent)

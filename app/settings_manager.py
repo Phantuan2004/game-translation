@@ -129,3 +129,21 @@ class SettingsManager:
                 settings["capture_region"] = None
             elif reg["width"] <= 0 or reg["height"] <= 0:
                 settings["capture_region"] = None
+
+        # Validate txt_output_path portability (e.g., path copied from another machine)
+        txt_path = settings.get("txt_output_path")
+        if not isinstance(txt_path, str) or not txt_path.strip():
+            settings["txt_output_path"] = DEFAULT_SETTINGS["txt_output_path"]
+        else:
+            try:
+                parent = Path(txt_path).parent
+                if parent and str(parent) != ".":
+                    parent.mkdir(parents=True, exist_ok=True)
+            except OSError as e:
+                logger.warning(
+                    "Configured txt_output_path '%s' is inaccessible (%s). Falling back to '%s'.",
+                    txt_path,
+                    e,
+                    DEFAULT_SETTINGS["txt_output_path"],
+                )
+                settings["txt_output_path"] = DEFAULT_SETTINGS["txt_output_path"]
