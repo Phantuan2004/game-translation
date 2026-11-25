@@ -30,6 +30,7 @@ from PySide6.QtWidgets import (
 
 from app.settings_manager import SettingsManager
 from app.hotkey_manager import HotkeyManager
+from app.i18n import tr, DEFAULT_UI_LANGUAGE
 from capture.screen_capture import ScreenCapture
 from capture.region_selector import RegionSelector
 from overlay.translation_overlay import TranslationOverlay
@@ -176,8 +177,9 @@ class MainWindow(QMainWindow):
     def __init__(self, settings_manager: Optional[SettingsManager] = None):
         super().__init__()
         self.settings = settings_manager or SettingsManager()
+        self._ui_language: str = self.settings.get("ui_language", DEFAULT_UI_LANGUAGE)
         self.screen_capture = ScreenCapture()
-        self.region_selector = RegionSelector()
+        self.region_selector = RegionSelector(ui_language=self._ui_language)
         self.overlay = TranslationOverlay(settings_manager=self.settings)
         self.hotkey_manager = HotkeyManager(self)
         self.txt_writer = TxtWriter(self.settings.get("txt_output_path", "game_translation.txt"))
@@ -186,19 +188,28 @@ class MainWindow(QMainWindow):
         self.ocr_worker: Optional[OCRWorker] = None
         self.translation_worker: Optional[TranslationWorker] = None
         self._manual_seq_counter: int = 9000
+        self._current_seq_id: int = 0
+        self._is_manual_seq: bool = False
+        self._is_capturing: bool = False
+        self._is_paused: bool = False
+        self._cache_state: str = ""
         self._dialogue_cache_by_seq: dict[int, str] = {}
 
         self._setup_window()
         self._init_ui()
         self._load_saved_settings()
+        self._apply_language()
         self._connect_signals()
 
         # Show overlay if configured
         if self.settings.get("overlay_enabled", True):
             self.overlay.show()
 
+    def _t(self, key: str, **kwargs) -> str:
+        return tr(self._ui_language, key, **kwargs)
+
     def _setup_window(self):
-        self.setWindowTitle("Game Translator — Real-time Dialogue Translation")
+        self.setWindowTitle(self._t("window_title"))
         self.resize(1160, 800)
         self.setMinimumSize(980, 700)
         self.setStyleSheet(DARK_STYLESHEET)
@@ -249,8 +260,8 @@ class MainWindow(QMainWindow):
         # 4. Status Bar
         self.status_bar = QStatusBar()
         self.setStatusBar(self.status_bar)
-        self.status_label = QLabel("Ready")
-        self.perf_label = QLabel("Capture: Idle | Cap: -- ms | OCR: -- ms | Trans: -- ms | FPS: 0.0")
+        self.status_label = QLabel()
+        self.perf_label = QLabel()
         self.status_bar.addWidget(self.status_label, stretch=1)
         self.status_bar.addPermanentWidget(self.perf_label)
 
@@ -262,14 +273,28 @@ class MainWindow(QMainWindow):
 
         title = QLabel("GAME TRANSLATOR")
         title.setStyleSheet("font-size: 16px; font-weight: bold; color: #00E5FF; letter-spacing: 1px;")
-        subtitle = QLabel("Real-Time Low-Latency Game Dialogue Translation")
-        subtitle.setObjectName("secText")
+        self.subtitle_label = QLabel()
+        self.subtitle_label.setObjectName("secText")
 
         h_layout.addWidget(title)
-        h_layout.addWidget(subtitle)
+        h_layout.addWidget(self.subtitle_label)
         h_layout.addStretch()
 
-        self.state_badge = QLabel("STOPPED")
+        self.ui_lang_label = QLabel()
+        self.ui_lang_label.setObjectName("secText")
+        self.ui_lang_combo = QComboBox()
+        self.ui_lang_combo.addItem("Tiếng Việt", "vi")
+        self.ui_lang_combo.addItem("English", "en")
+        self.ui_lang_combo.setMinimumWidth(105)
+        lang_idx = self.ui_lang_combo.findData(self._ui_language)
+        if lang_idx >= 0:
+            self.ui_lang_combo.setCurrentIndex(lang_idx)
+
+        h_layout.addWidget(self.ui_lang_label)
+        h_layout.addWidget(self.ui_lang_combo)
+        h_layout.addSpacing(8)
+
+        self.state_badge = QLabel()
         self.state_badge.setStyleSheet(
             "background-color: #3A3F4B; color: #FFFFFF; font-weight: bold; "
             "padding: 4px 10px; border-radius: 4px; font-size: 11px;"
@@ -278,93 +303,100 @@ class MainWindow(QMainWindow):
         return header
 
     def _create_capture_settings_box(self) -> QGroupBox:
-        box = QGroupBox("Capture Settings (Milestone 1)")
-        layout = QGridLayout(box)
+        self.capture_box = QGroupBox()
+        layout = QGridLayout(self.capture_box)
         layout.setSpacing(8)
 
         # Monitor selection
-        layout.addWidget(QLabel("Monitor:"), 0, 0)
+        self.monitor_lbl = QLabel()
+        layout.addWidget(self.monitor_lbl, 0, 0)
         self.monitor_combo = QComboBox()
         self._populate_monitors()
         layout.addWidget(self.monitor_combo, 0, 1, 1, 2)
 
         # Selected Region Info & Button
-        layout.addWidget(QLabel("Capture Region:"), 1, 0)
-        self.region_label = QLabel("No region selected")
+        self.capture_region_lbl = QLabel()
+        layout.addWidget(self.capture_region_lbl, 1, 0)
+        self.region_label = QLabel()
         self.region_label.setStyleSheet("color: #E2E8F0; font-family: monospace; font-size: 11px;")
         layout.addWidget(self.region_label, 1, 1)
 
-        self.select_region_btn = QPushButton("Select Screen Region")
+        self.select_region_btn = QPushButton()
         self.select_region_btn.setStyleSheet("font-weight: bold; color: #00E5FF;")
         layout.addWidget(self.select_region_btn, 1, 2)
 
         # Capture Interval
-        layout.addWidget(QLabel("Interval (ms):"), 2, 0)
+        self.interval_lbl = QLabel()
+        layout.addWidget(self.interval_lbl, 2, 0)
         self.interval_spin = QSpinBox()
         self.interval_spin.setRange(30, 2000)
         self.interval_spin.setSingleStep(25)
         self.interval_spin.setValue(self.settings.get("capture_interval_ms", 150))
         layout.addWidget(self.interval_spin, 2, 1)
 
-        interval_hint = QLabel("Recommended: 100-200 ms")
-        interval_hint.setObjectName("secText")
-        layout.addWidget(interval_hint, 2, 2)
+        self.interval_hint = QLabel()
+        self.interval_hint.setObjectName("secText")
+        layout.addWidget(self.interval_hint, 2, 2)
 
-        return box
+        return self.capture_box
 
     def _create_ocr_settings_box(self) -> QGroupBox:
-        box = QGroupBox("OCR & Detection Settings (Milestone 2)")
-        layout = QGridLayout(box)
+        self.ocr_box = QGroupBox()
+        layout = QGridLayout(self.ocr_box)
         layout.setSpacing(8)
 
-        self.ocr_enable_cb = QCheckBox("Enable Local OCR")
+        self.ocr_enable_cb = QCheckBox()
         self.ocr_enable_cb.setChecked(self.settings.get("ocr_enabled", True))
         layout.addWidget(self.ocr_enable_cb, 0, 0)
 
-        layout.addWidget(QLabel("Engine:"), 0, 1)
+        self.ocr_engine_lbl = QLabel()
+        layout.addWidget(self.ocr_engine_lbl, 0, 1)
         self.ocr_engine_combo = QComboBox()
-        self.ocr_engine_combo.addItems([
-            "Auto (Fastest available)",
-            "Windows Media OCR (~6ms)",
-            "RapidOCR (ONNX Neural)",
-        ])
+        self.ocr_engine_combo.addItems(["", "", ""])
         layout.addWidget(self.ocr_engine_combo, 0, 2)
 
-        layout.addWidget(QLabel("Confidence Min:"), 1, 0)
+        self.ocr_conf_lbl = QLabel()
+        layout.addWidget(self.ocr_conf_lbl, 1, 0)
         self.ocr_conf_spin = QDoubleSpinBox()
         self.ocr_conf_spin.setRange(0.0, 1.0)
         self.ocr_conf_spin.setSingleStep(0.05)
         self.ocr_conf_spin.setValue(self.settings.get("ocr_confidence_threshold", 0.4))
         layout.addWidget(self.ocr_conf_spin, 1, 1)
 
-        self.ocr_status_label = QLabel("Change detection: Active")
+        self.ocr_status_label = QLabel()
         self.ocr_status_label.setObjectName("secText")
         layout.addWidget(self.ocr_status_label, 1, 2)
 
-        return box
+        return self.ocr_box
 
     def _create_translation_settings_box(self) -> QGroupBox:
-        box = QGroupBox("Translation Settings (Milestone 3)")
-        layout = QGridLayout(box)
+        self.translation_box = QGroupBox()
+        layout = QGridLayout(self.translation_box)
         layout.setSpacing(8)
 
-        layout.addWidget(QLabel("Language:"), 0, 0)
+        self.trans_lang_lbl = QLabel()
+        layout.addWidget(self.trans_lang_lbl, 0, 0)
         lang_layout = QHBoxLayout()
         self.src_lang_combo = QComboBox()
-        self.src_lang_combo.addItems(["Auto Detect", "English (en)", "Japanese (ja)", "Chinese (zh)"])
+        self.src_lang_combo.addItem("", "auto")
+        self.src_lang_combo.addItem("", "en")
+        self.src_lang_combo.addItem("", "ja")
+        self.src_lang_combo.addItem("", "zh")
         self.tgt_lang_combo = QComboBox()
-        self.tgt_lang_combo.addItems(["Vietnamese (vi)"])
+        self.tgt_lang_combo.addItem("", "vi")
         lang_layout.addWidget(self.src_lang_combo)
         lang_layout.addWidget(QLabel("→"))
         lang_layout.addWidget(self.tgt_lang_combo)
         layout.addLayout(lang_layout, 0, 1, 1, 2)
 
-        layout.addWidget(QLabel("Provider:"), 1, 0)
+        self.provider_lbl = QLabel()
+        layout.addWidget(self.provider_lbl, 1, 0)
         self.provider_combo = QComboBox()
-        self.provider_combo.addItems(["Google Translate (Free / Fast)", "DeepL API"])
+        self.provider_combo.addItems(["", ""])
         layout.addWidget(self.provider_combo, 1, 1)
 
-        layout.addWidget(QLabel("Timeout:"), 1, 2)
+        self.timeout_lbl = QLabel()
+        layout.addWidget(self.timeout_lbl, 1, 2)
         self.timeout_spin = QDoubleSpinBox()
         self.timeout_spin.setRange(1.0, 10.0)
         self.timeout_spin.setSingleStep(0.5)
@@ -372,19 +404,19 @@ class MainWindow(QMainWindow):
         self.timeout_spin.setSuffix(" s")
         layout.addWidget(self.timeout_spin, 1, 3)
 
-        layout.addWidget(QLabel("API Key:"), 2, 0)
+        self.api_key_lbl = QLabel()
+        layout.addWidget(self.api_key_lbl, 2, 0)
         self.api_key_edit = QLineEdit(self.settings.get("translation_api_key", ""))
         self.api_key_edit.setEchoMode(QLineEdit.EchoMode.Password)
-        self.api_key_edit.setPlaceholderText("Optional for Google, required for DeepL")
         layout.addWidget(self.api_key_edit, 2, 1, 1, 3)
 
-        return box
+        return self.translation_box
 
     def _create_preview_box(self) -> QGroupBox:
-        box = QGroupBox("Live Capture Preview")
-        layout = QVBoxLayout(box)
+        self.preview_box = QGroupBox()
+        layout = QVBoxLayout(self.preview_box)
 
-        self.preview_label = QLabel("Select a region and start capture to preview dialogue area.")
+        self.preview_label = QLabel()
         self.preview_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.preview_label.setStyleSheet(
             "background-color: #0E0E10; border: 1px dashed #3A3F4B; border-radius: 6px; color: #70757F;"
@@ -394,15 +426,15 @@ class MainWindow(QMainWindow):
 
         # Preview HUD details
         hud_layout = QHBoxLayout()
-        self.hud_size_label = QLabel("Region: -- x --")
+        self.hud_size_label = QLabel()
         self.hud_size_label.setObjectName("secText")
-        self.hud_cap_lat_label = QLabel("Cap: -- ms")
+        self.hud_cap_lat_label = QLabel()
         self.hud_cap_lat_label.setObjectName("secText")
-        self.hud_ocr_lat_label = QLabel("OCR: -- ms")
+        self.hud_ocr_lat_label = QLabel()
         self.hud_ocr_lat_label.setObjectName("secText")
-        self.hud_trans_lat_label = QLabel("Trans: -- ms")
+        self.hud_trans_lat_label = QLabel()
         self.hud_trans_lat_label.setObjectName("secText")
-        self.hud_fps_label = QLabel("FPS: --")
+        self.hud_fps_label = QLabel()
         self.hud_fps_label.setObjectName("secText")
 
         hud_layout.addWidget(self.hud_size_label)
@@ -416,29 +448,30 @@ class MainWindow(QMainWindow):
         hud_layout.addWidget(self.hud_fps_label)
 
         layout.addLayout(hud_layout)
-        return box
+        return self.preview_box
 
     def _create_dialogue_view_box(self) -> QGroupBox:
-        box = QGroupBox("Detected Dialogue & Translation")
-        layout = QVBoxLayout(box)
+        self.dialogue_box = QGroupBox()
+        layout = QVBoxLayout(self.dialogue_box)
 
         # Latest original text header
         orig_header = QHBoxLayout()
-        orig_header.addWidget(QLabel("Latest Recognized Original:"))
-        self.seq_badge = QLabel("Seq: #0")
+        self.orig_header_lbl = QLabel()
+        orig_header.addWidget(self.orig_header_lbl)
+        self.seq_badge = QLabel()
         self.seq_badge.setStyleSheet("color: #00E5FF; font-family: monospace; font-size: 11px;")
         orig_header.addStretch()
         orig_header.addWidget(self.seq_badge)
         layout.addLayout(orig_header)
 
         self.detected_text_edit = QPlainTextEdit()
-        self.detected_text_edit.setPlaceholderText("OCR recognized text will appear here (editable for manual translation)...")
         self.detected_text_edit.setMaximumHeight(65)
         layout.addWidget(self.detected_text_edit)
 
         # Translation header
         trans_header = QHBoxLayout()
-        trans_header.addWidget(QLabel("Vietnamese Translation:"))
+        self.trans_header_lbl = QLabel()
+        trans_header.addWidget(self.trans_header_lbl)
         self.cache_badge = QLabel("")
         self.cache_badge.setStyleSheet("color: #10B981; font-weight: bold; font-size: 11px;")
         trans_header.addStretch()
@@ -446,38 +479,39 @@ class MainWindow(QMainWindow):
         layout.addLayout(trans_header)
 
         self.translated_text_edit = QPlainTextEdit()
-        self.translated_text_edit.setPlaceholderText("Vietnamese translation will appear here in real time...")
         self.translated_text_edit.setMaximumHeight(65)
         layout.addWidget(self.translated_text_edit)
 
-        return box
+        return self.dialogue_box
 
     def _create_output_settings_box(self) -> QGroupBox:
-        box = QGroupBox("Output Settings (Milestones 4 & 5)")
-        layout = QGridLayout(box)
+        self.output_box = QGroupBox()
+        layout = QGridLayout(self.output_box)
         layout.setSpacing(8)
 
         # Overlay Controls
-        self.overlay_cb = QCheckBox("Enable Game Overlay")
+        self.overlay_cb = QCheckBox()
         self.overlay_cb.setChecked(self.settings.get("overlay_enabled", True))
         layout.addWidget(self.overlay_cb, 0, 0)
 
-        self.reposition_overlay_btn = QPushButton("🔓 Unlock / Move Overlay")
+        self.reposition_overlay_btn = QPushButton()
         self.reposition_overlay_btn.setStyleSheet("font-weight: bold; color: #00E5FF;")
         layout.addWidget(self.reposition_overlay_btn, 0, 1)
 
-        self.show_orig_cb = QCheckBox("Show Original (EN)")
+        self.show_orig_cb = QCheckBox()
         self.show_orig_cb.setChecked(self.settings.get("overlay_show_original", True))
         layout.addWidget(self.show_orig_cb, 0, 2)
 
         # Overlay Styling: Font & Opacity
-        layout.addWidget(QLabel("Overlay Font:"), 1, 0)
+        self.overlay_font_lbl = QLabel()
+        layout.addWidget(self.overlay_font_lbl, 1, 0)
         self.overlay_font_spin = QSpinBox()
         self.overlay_font_spin.setRange(12, 36)
         self.overlay_font_spin.setValue(self.settings.get("overlay_font_size", 18))
         layout.addWidget(self.overlay_font_spin, 1, 1)
 
-        layout.addWidget(QLabel("Overlay Opacity:"), 1, 2)
+        self.overlay_opacity_lbl = QLabel()
+        layout.addWidget(self.overlay_opacity_lbl, 1, 2)
         self.overlay_opacity_spin = QDoubleSpinBox()
         self.overlay_opacity_spin.setRange(0.2, 1.0)
         self.overlay_opacity_spin.setSingleStep(0.05)
@@ -485,7 +519,7 @@ class MainWindow(QMainWindow):
         layout.addWidget(self.overlay_opacity_spin, 1, 3)
 
         # TXT Output Controls
-        self.txt_cb = QCheckBox("Enable TXT Output")
+        self.txt_cb = QCheckBox()
         self.txt_cb.setChecked(self.settings.get("txt_output_enabled", True))
         layout.addWidget(self.txt_cb, 2, 0)
 
@@ -494,16 +528,16 @@ class MainWindow(QMainWindow):
 
         txt_btns_layout = QHBoxLayout()
         txt_btns_layout.setSpacing(6)
-        self.browse_txt_btn = QPushButton("Browse")
-        self.open_txt_btn = QPushButton("Open File")
-        self.clear_history_btn = QPushButton("Reset Log")
+        self.browse_txt_btn = QPushButton()
+        self.open_txt_btn = QPushButton()
+        self.clear_history_btn = QPushButton()
 
         txt_btns_layout.addWidget(self.browse_txt_btn)
         txt_btns_layout.addWidget(self.open_txt_btn)
         txt_btns_layout.addWidget(self.clear_history_btn)
         layout.addLayout(txt_btns_layout, 2, 2, 1, 2)
 
-        return box
+        return self.output_box
 
     def _create_control_action_bar(self) -> QWidget:
         bar = QFrame()
@@ -511,26 +545,26 @@ class MainWindow(QMainWindow):
         layout = QHBoxLayout(bar)
         layout.setSpacing(10)
 
-        self.start_btn = QPushButton("▶  Start Capture")
+        self.start_btn = QPushButton()
         self.start_btn.setObjectName("primaryBtn")
         self.start_btn.setFixedHeight(34)
 
-        self.pause_btn = QPushButton("⏸  Pause (F9)")
+        self.pause_btn = QPushButton()
         self.pause_btn.setEnabled(False)
         self.pause_btn.setFixedHeight(34)
 
-        self.stop_btn = QPushButton("⏹  Stop")
+        self.stop_btn = QPushButton()
         self.stop_btn.setObjectName("stopBtn")
         self.stop_btn.setEnabled(False)
         self.stop_btn.setFixedHeight(34)
 
-        self.manual_translate_btn = QPushButton("Manual Translate (F10)")
+        self.manual_translate_btn = QPushButton()
         self.manual_translate_btn.setFixedHeight(34)
 
-        self.clear_btn = QPushButton("Clear (F11)")
+        self.clear_btn = QPushButton()
         self.clear_btn.setFixedHeight(34)
 
-        self.toggle_overlay_btn = QPushButton("Toggle Overlay (F8)")
+        self.toggle_overlay_btn = QPushButton()
         self.toggle_overlay_btn.setFixedHeight(34)
 
         layout.addWidget(self.start_btn)
@@ -560,13 +594,159 @@ class MainWindow(QMainWindow):
         region = self.settings.get("capture_region")
         if region:
             self._update_region_ui(region)
-        else:
-            self.region_label.setText("No region selected")
 
         # Global Hotkeys
         self.hotkey_manager.register_defaults(self.settings.get("hotkeys"))
 
+    def _on_ui_language_changed(self, index: int):
+        lang = self.ui_lang_combo.itemData(index)
+        if lang:
+            self.set_ui_language(lang)
+
+    def set_ui_language(self, lang: str):
+        if lang not in ("en", "vi"):
+            lang = DEFAULT_UI_LANGUAGE
+        self._ui_language = lang
+        self.settings.set("ui_language", lang)
+
+        # Sync combo box without re-triggering signal
+        idx = self.ui_lang_combo.findData(lang)
+        if idx >= 0 and self.ui_lang_combo.currentIndex() != idx:
+            self.ui_lang_combo.blockSignals(True)
+            self.ui_lang_combo.setCurrentIndex(idx)
+            self.ui_lang_combo.blockSignals(False)
+
+        self.region_selector.set_ui_language(lang)
+        self.overlay.set_ui_language(lang)
+        self._apply_language()
+
+    def _apply_language(self):
+        self.setWindowTitle(self._t("window_title"))
+        self.subtitle_label.setText(self._t("header_subtitle"))
+        self.ui_lang_label.setText(self._t("ui_lang_label"))
+
+        # Capture box
+        self.capture_box.setTitle(self._t("group_capture"))
+        self.monitor_lbl.setText(self._t("lbl_monitor"))
+        self.capture_region_lbl.setText(self._t("lbl_capture_region"))
+        self.select_region_btn.setText(self._t("btn_select_region"))
+        self.interval_lbl.setText(self._t("lbl_interval"))
+        self.interval_hint.setText(self._t("interval_hint"))
+
+        region = self.settings.get("capture_region")
+        if region:
+            self._update_region_ui(region)
+        else:
+            self.region_label.setText(self._t("no_region_selected"))
+            self.hud_size_label.setText(self._t("hud_region_empty"))
+
+        # OCR box
+        self.ocr_box.setTitle(self._t("group_ocr"))
+        self.ocr_enable_cb.setText(self._t("cb_enable_ocr"))
+        self.ocr_engine_lbl.setText(self._t("lbl_ocr_engine"))
+        ocr_idx = max(0, self.ocr_engine_combo.currentIndex())
+        self.ocr_engine_combo.blockSignals(True)
+        self.ocr_engine_combo.setItemText(0, self._t("ocr_engine_auto"))
+        self.ocr_engine_combo.setItemText(1, self._t("ocr_engine_windows"))
+        self.ocr_engine_combo.setItemText(2, self._t("ocr_engine_rapid"))
+        self.ocr_engine_combo.setCurrentIndex(ocr_idx)
+        self.ocr_engine_combo.blockSignals(False)
+        self.ocr_conf_lbl.setText(self._t("lbl_conf_min"))
+        if not self._is_capturing:
+            self.ocr_status_label.setText(self._t("ocr_status_active"))
+
+        # Translation box
+        self.translation_box.setTitle(self._t("group_translation"))
+        self.trans_lang_lbl.setText(self._t("lbl_trans_lang"))
+        src_idx = max(0, self.src_lang_combo.currentIndex())
+        self.src_lang_combo.blockSignals(True)
+        self.src_lang_combo.setItemText(0, self._t("src_lang_auto"))
+        self.src_lang_combo.setItemText(1, self._t("src_lang_en"))
+        self.src_lang_combo.setItemText(2, self._t("src_lang_ja"))
+        self.src_lang_combo.setItemText(3, self._t("src_lang_zh"))
+        self.src_lang_combo.setCurrentIndex(src_idx)
+        self.src_lang_combo.blockSignals(False)
+
+        self.tgt_lang_combo.blockSignals(True)
+        self.tgt_lang_combo.setItemText(0, self._t("tgt_lang_vi"))
+        self.tgt_lang_combo.blockSignals(False)
+
+        self.provider_lbl.setText(self._t("lbl_provider"))
+        prov_idx = max(0, self.provider_combo.currentIndex())
+        self.provider_combo.blockSignals(True)
+        self.provider_combo.setItemText(0, self._t("provider_google"))
+        self.provider_combo.setItemText(1, self._t("provider_deepl"))
+        self.provider_combo.setCurrentIndex(prov_idx)
+        self.provider_combo.blockSignals(False)
+
+        self.timeout_lbl.setText(self._t("lbl_timeout"))
+        self.api_key_lbl.setText(self._t("lbl_api_key"))
+        self.api_key_edit.setPlaceholderText(self._t("api_key_placeholder"))
+
+        # Output box
+        self.output_box.setTitle(self._t("group_output"))
+        self.overlay_cb.setText(self._t("cb_enable_overlay"))
+        self.reposition_overlay_btn.setText(self._t("btn_reposition_overlay"))
+        self.show_orig_cb.setText(self._t("cb_show_original"))
+        self.overlay_font_lbl.setText(self._t("lbl_overlay_font"))
+        self.overlay_opacity_lbl.setText(self._t("lbl_overlay_opacity"))
+        self.txt_cb.setText(self._t("cb_enable_txt"))
+        self.browse_txt_btn.setText(self._t("btn_browse_txt"))
+        self.open_txt_btn.setText(self._t("btn_open_txt"))
+        self.clear_history_btn.setText(self._t("btn_reset_txt"))
+
+        # Preview box
+        self.preview_box.setTitle(self._t("group_preview"))
+        if self.preview_label.pixmap() is None or self.preview_label.pixmap().isNull():
+            self.preview_label.setText(self._t("preview_placeholder"))
+        if not self._is_capturing:
+            self.hud_cap_lat_label.setText(self._t("hud_cap_empty"))
+            self.hud_ocr_lat_label.setText(self._t("hud_ocr_empty"))
+            self.hud_trans_lat_label.setText(self._t("hud_trans_empty"))
+            self.hud_fps_label.setText(self._t("hud_fps_empty"))
+
+        # Dialogue view box
+        self.dialogue_box.setTitle(self._t("group_dialogue"))
+        self.orig_header_lbl.setText(self._t("lbl_orig_header"))
+        seq_key = "seq_badge_manual" if self._is_manual_seq else "seq_badge"
+        self.seq_badge.setText(self._t(seq_key, seq_id=self._current_seq_id))
+        self.detected_text_edit.setPlaceholderText(self._t("detected_placeholder"))
+        self.trans_header_lbl.setText(self._t("lbl_trans_header"))
+        self.translated_text_edit.setPlaceholderText(self._t("translated_placeholder"))
+        if self._cache_state == "cached":
+            self.cache_badge.setText(self._t("badge_cached"))
+        elif self._cache_state == "live":
+            self.cache_badge.setText(self._t("badge_live"))
+        elif self._cache_state == "failed":
+            self.cache_badge.setText(self._t("badge_failed"))
+        else:
+            self.cache_badge.setText("")
+
+        # Action bar
+        self.start_btn.setText(self._t("btn_start"))
+        self.stop_btn.setText(self._t("btn_stop"))
+        self.manual_translate_btn.setText(self._t("btn_manual_translate"))
+        self.clear_btn.setText(self._t("btn_clear"))
+        self.toggle_overlay_btn.setText(self._t("btn_toggle_overlay"))
+
+        # State badge & pause button & status bar
+        self._refresh_capture_state_labels()
+
+    def _refresh_capture_state_labels(self):
+        if self._is_capturing and not self._is_paused:
+            self.state_badge.setText(self._t("state_capturing"))
+            self.pause_btn.setText(self._t("btn_pause"))
+        elif self._is_capturing and self._is_paused:
+            self.state_badge.setText(self._t("state_paused"))
+            self.pause_btn.setText(self._t("btn_resume"))
+        else:
+            self.state_badge.setText(self._t("state_stopped"))
+            self.pause_btn.setText(self._t("btn_pause"))
+            self.status_label.setText(self._t("status_ready"))
+            self.perf_label.setText(self._t("perf_idle"))
+
     def _connect_signals(self):
+        self.ui_lang_combo.currentIndexChanged.connect(self._on_ui_language_changed)
         self.select_region_btn.clicked.connect(self._on_click_select_region)
         self.region_selector.region_selected.connect(self._on_region_selected)
         self.region_selector.selection_cancelled.connect(self._on_region_selection_cancelled)
@@ -620,17 +800,19 @@ class MainWindow(QMainWindow):
             self.capture_worker.set_region(region)
         if self.ocr_worker:
             self.ocr_worker.reset_detectors()
-        self.status_label.setText("Region selected.")
+        self.status_label.setText(self._t("status_region_selected"))
 
     @Slot()
     def _on_region_selection_cancelled(self):
-        self.status_label.setText("Region selection cancelled.")
+        self.status_label.setText(self._t("status_region_cancelled"))
 
     def _update_region_ui(self, region: dict):
         self.region_label.setText(
             f"X: {region['left']}, Y: {region['top']} | {region['width']}x{region['height']}"
         )
-        self.hud_size_label.setText(f"Region: {region['width']}x{region['height']}")
+        self.hud_size_label.setText(
+            self._t("hud_region_size", width=region["width"], height=region["height"])
+        )
 
     def _on_interval_changed(self, value: int):
         self.settings.set("capture_interval_ms", value)
@@ -689,20 +871,23 @@ class MainWindow(QMainWindow):
     def _toggle_overlay(self):
         if self.overlay.isVisible():
             self.overlay.hide()
-            self.status_label.setText("Overlay hidden (F8 to show)")
+            self.status_label.setText(self._t("status_overlay_hidden"))
         else:
             self.overlay.show()
-            self.status_label.setText("Overlay displayed (F8 to hide)")
+            self.status_label.setText(self._t("status_overlay_shown"))
 
     def _on_reposition_overlay_clicked(self):
         self.overlay.show()
         self.overlay.raise_()
         self.overlay.set_click_through(False)  # Unlock for mouse drag
-        self.status_label.setText("Overlay unlocked. Drag and resize to position above game.")
+        self.status_label.setText(self._t("status_overlay_unlocked"))
 
     def _browse_txt_path(self):
         path, _ = QFileDialog.getSaveFileName(
-            self, "Select Dialogue History File", self.txt_path_edit.text(), "Text Files (*.txt);;All Files (*)"
+            self,
+            self._t("dlg_save_txt_title"),
+            self.txt_path_edit.text(),
+            self._t("dlg_save_txt_filter"),
         )
         if path:
             self.txt_path_edit.setText(path)
@@ -712,12 +897,15 @@ class MainWindow(QMainWindow):
     def _on_reset_txt_history(self):
         ok = self.txt_writer.clear_session()
         if ok:
-            self.status_label.setText("TXT dialogue history session reset.")
+            self.status_label.setText(self._t("status_txt_reset"))
 
     def _clear_views(self):
         self.detected_text_edit.clear()
         self.translated_text_edit.clear()
-        self.seq_badge.setText("Seq: #0")
+        self._current_seq_id = 0
+        self._is_manual_seq = False
+        self._cache_state = ""
+        self.seq_badge.setText(self._t("seq_badge", seq_id=0))
         self.cache_badge.setText("")
         self.overlay.clear_dialogue()
         self._dialogue_cache_by_seq.clear()
@@ -725,18 +913,10 @@ class MainWindow(QMainWindow):
             self.ocr_worker.reset_detectors()
         if self.translation_worker:
             self.translation_worker.reset_state()
-        self.status_label.setText("Cleared dialogue views, overlay, and scheduler.")
+        self.status_label.setText(self._t("status_cleared"))
 
     def _get_lang_codes(self):
-        src_raw = self.src_lang_combo.currentText().lower()
-        if "en" in src_raw:
-            sl = "en"
-        elif "ja" in src_raw:
-            sl = "ja"
-        elif "zh" in src_raw:
-            sl = "zh"
-        else:
-            sl = "auto"
+        sl = self.src_lang_combo.currentData() or "auto"
         return sl, "vi"
 
     def _on_manual_translate(self):
@@ -746,7 +926,9 @@ class MainWindow(QMainWindow):
 
         self._manual_seq_counter += 1
         seq_id = self._manual_seq_counter
-        self.seq_badge.setText(f"Seq: #{seq_id} (Manual)")
+        self._current_seq_id = seq_id
+        self._is_manual_seq = True
+        self.seq_badge.setText(self._t("seq_badge_manual", seq_id=seq_id))
         self._dialogue_cache_by_seq[seq_id] = text
 
         sl, tl = self._get_lang_codes()
@@ -774,8 +956,8 @@ class MainWindow(QMainWindow):
         if not region:
             QMessageBox.warning(
                 self,
-                "Region Required",
-                "Please click 'Select Screen Region' to choose the dialogue box area before starting capture.",
+                self._t("dlg_region_req_title"),
+                self._t("dlg_region_req_msg"),
             )
             return
 
@@ -814,12 +996,12 @@ class MainWindow(QMainWindow):
 
         if not self.capture_worker.isRunning():
             self.capture_worker.start()
-        elif self.pause_btn.text().startswith("▶"):
+        elif self._is_paused:
             self.capture_worker.resume_capture()
 
     def _pause_capture(self):
         if self.capture_worker and self.capture_worker.isRunning():
-            if self.pause_btn.text().startswith("⏸"):
+            if not self._is_paused:
                 self.capture_worker.pause_capture()
             else:
                 self.capture_worker.resume_capture()
@@ -849,7 +1031,7 @@ class MainWindow(QMainWindow):
             )
             self.preview_label.setPixmap(scaled)
 
-        self.hud_cap_lat_label.setText(f"Cap: {latency_ms:.1f} ms")
+        self.hud_cap_lat_label.setText(self._t("hud_cap_val", lat=latency_ms))
 
         # Pass frame to OCR worker without blocking capture
         if self.ocr_worker and self.ocr_enable_cb.isChecked():
@@ -857,9 +1039,11 @@ class MainWindow(QMainWindow):
 
     @Slot(int, str, float, float)
     def _on_dialogue_detected(self, seq_id: int, text: str, confidence: float, latency_ms: float):
-        self.seq_badge.setText(f"Seq: #{seq_id}")
+        self._current_seq_id = seq_id
+        self._is_manual_seq = False
+        self.seq_badge.setText(self._t("seq_badge", seq_id=seq_id))
         self.detected_text_edit.setPlainText(text)
-        self.status_label.setText(f"Dialogue #{seq_id} recognized. Submitting for translation...")
+        self.status_label.setText(self._t("status_dialogue_recognized", seq_id=seq_id))
         self._dialogue_cache_by_seq[seq_id] = text
 
         # Update overlay original text if enabled
@@ -874,10 +1058,15 @@ class MainWindow(QMainWindow):
     @Slot(int, str, str, float, bool)
     def _on_translation_ready(self, seq_id: int, orig: str, trans: str, latency_ms: float, is_cached: bool):
         self.translated_text_edit.setPlainText(trans)
-        cache_str = "[CACHED]" if is_cached else "[LIVE]"
+        self._cache_state = "cached" if is_cached else "live"
+        cache_str = self._t("badge_cached") if is_cached else self._t("badge_live")
         self.cache_badge.setText(cache_str)
-        self.hud_trans_lat_label.setText(f"Trans: {latency_ms:.0f} ms {'(Cache)' if is_cached else ''}")
-        self.status_label.setText(f"Translated dialogue #{seq_id} ({cache_str.lower()} in {latency_ms:.1f} ms)")
+        suffix = self._t("hud_trans_cache_suffix") if is_cached else ""
+        self.hud_trans_lat_label.setText(self._t("hud_trans_val", lat=latency_ms, suffix=suffix))
+        mode = self._t("mode_cached") if is_cached else self._t("mode_live")
+        self.status_label.setText(
+            self._t("status_translated", seq_id=seq_id, mode=mode, lat=latency_ms)
+        )
 
         # 1. Update Game Overlay (if enabled)
         if self.overlay_cb.isChecked() and self.overlay.isVisible():
@@ -899,74 +1088,77 @@ class MainWindow(QMainWindow):
 
     @Slot(int, str, str)
     def _on_translation_failed(self, seq_id: int, orig: str, err_msg: str):
-        self.status_label.setText(f"Translation #{seq_id} failed: {err_msg}")
-        self.cache_badge.setText("[FAILED]")
+        self.status_label.setText(self._t("status_trans_failed", seq_id=seq_id, err=err_msg))
+        self._cache_state = "failed"
+        self.cache_badge.setText(self._t("badge_failed"))
         # Record failed in TXT history if enabled
         if self.txt_cb.isChecked():
             self.txt_writer.append_dialogue(seq_id, orig, err_msg, status="failed")
 
     @Slot(str, float, float)
     def _on_ocr_completed(self, text: str, confidence: float, latency_ms: float):
-        self.hud_ocr_lat_label.setText(f"OCR: {latency_ms:.1f} ms")
-        self.ocr_status_label.setText(f"Last OCR: {latency_ms:.1f} ms")
+        self.hud_ocr_lat_label.setText(self._t("hud_ocr_val", lat=latency_ms))
+        self.ocr_status_label.setText(self._t("ocr_status_last", lat=latency_ms))
 
     @Slot(float)
     def _on_ocr_skipped(self, diff_score: float):
-        self.ocr_status_label.setText(f"Static (diff: {diff_score:.1f})")
+        self.ocr_status_label.setText(self._t("ocr_status_static", diff=diff_score))
 
     @Slot(float, float)
     def _on_fps_updated(self, fps: float, avg_latency: float):
-        self.hud_fps_label.setText(f"FPS: {fps:.1f}")
-        self.perf_label.setText(f"Capture: Active | Cap: {avg_latency:.1f} ms | FPS: {fps:.1f}")
+        self.hud_fps_label.setText(self._t("hud_fps_val", fps=fps))
+        self.perf_label.setText(self._t("perf_active", lat=avg_latency, fps=fps))
 
     @Slot(bool, bool)
     def _on_capture_status_changed(self, is_running: bool, is_paused: bool):
+        self._is_capturing = is_running
+        self._is_paused = is_paused
         if is_running and not is_paused:
-            self.state_badge.setText("CAPTURING")
+            self.state_badge.setText(self._t("state_capturing"))
             self.state_badge.setStyleSheet(
                 "background-color: #007ACC; color: #FFFFFF; font-weight: bold; "
                 "padding: 4px 10px; border-radius: 4px; font-size: 11px;"
             )
             self.start_btn.setEnabled(False)
             self.pause_btn.setEnabled(True)
-            self.pause_btn.setText("⏸  Pause (F9)")
+            self.pause_btn.setText(self._t("btn_pause"))
             self.stop_btn.setEnabled(True)
-            self.status_label.setText("Pipeline active: Capture + OCR + Translation + Overlay + TXT.")
+            self.status_label.setText(self._t("status_pipeline_active"))
         elif is_running and is_paused:
-            self.state_badge.setText("PAUSED")
+            self.state_badge.setText(self._t("state_paused"))
             self.state_badge.setStyleSheet(
                 "background-color: #D97706; color: #FFFFFF; font-weight: bold; "
                 "padding: 4px 10px; border-radius: 4px; font-size: 11px;"
             )
             self.start_btn.setEnabled(False)
             self.pause_btn.setEnabled(True)
-            self.pause_btn.setText("▶  Resume (F9)")
+            self.pause_btn.setText(self._t("btn_resume"))
             self.stop_btn.setEnabled(True)
-            self.status_label.setText("Screen capture paused.")
+            self.status_label.setText(self._t("status_paused"))
         else:
-            self.state_badge.setText("STOPPED")
+            self.state_badge.setText(self._t("state_stopped"))
             self.state_badge.setStyleSheet(
                 "background-color: #3A3F4B; color: #FFFFFF; font-weight: bold; "
                 "padding: 4px 10px; border-radius: 4px; font-size: 11px;"
             )
             self.start_btn.setEnabled(True)
             self.pause_btn.setEnabled(False)
-            self.pause_btn.setText("⏸  Pause (F9)")
+            self.pause_btn.setText(self._t("btn_pause"))
             self.stop_btn.setEnabled(False)
-            self.status_label.setText("Screen capture stopped.")
-            self.hud_fps_label.setText("FPS: --")
-            self.hud_ocr_lat_label.setText("OCR: -- ms")
-            self.hud_trans_lat_label.setText("Trans: -- ms")
-            self.perf_label.setText("Capture: Idle | Cap: -- ms | OCR: -- ms | Trans: -- ms | FPS: 0.0")
+            self.status_label.setText(self._t("status_stopped"))
+            self.hud_fps_label.setText(self._t("hud_fps_empty"))
+            self.hud_ocr_lat_label.setText(self._t("hud_ocr_empty"))
+            self.hud_trans_lat_label.setText(self._t("hud_trans_empty"))
+            self.perf_label.setText(self._t("perf_idle"))
 
     @Slot(str)
     def _on_capture_error(self, err_msg: str):
-        self.status_label.setText(f"Capture Error: {err_msg}")
+        self.status_label.setText(self._t("status_capture_error", err=err_msg))
         logger.error("Capture worker error: %s", err_msg)
 
     @Slot(str)
     def _on_ocr_error(self, err_msg: str):
-        self.status_label.setText(f"OCR Error: {err_msg}")
+        self.status_label.setText(self._t("status_ocr_error", err=err_msg))
         logger.error("OCR worker error: %s", err_msg)
 
     def closeEvent(self, event):

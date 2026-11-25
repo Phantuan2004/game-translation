@@ -4,6 +4,8 @@ from PySide6.QtCore import Qt, QRect, QPoint, Signal
 from PySide6.QtGui import QPainter, QColor, QPen, QBrush, QFont, QGuiApplication
 from PySide6.QtWidgets import QWidget
 
+from app.i18n import tr, DEFAULT_UI_LANGUAGE
+
 logger = logging.getLogger(__name__)
 
 
@@ -13,8 +15,9 @@ class RegionSelector(QWidget):
     region_selected = Signal(dict)
     selection_cancelled = Signal()
 
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, ui_language: str = DEFAULT_UI_LANGUAGE):
         super().__init__(parent)
+        self._ui_language = ui_language
         self.setWindowFlags(
             Qt.WindowType.FramelessWindowHint
             | Qt.WindowType.WindowStaysOnTopHint
@@ -26,6 +29,10 @@ class RegionSelector(QWidget):
         self._start_pos: Optional[QPoint] = None
         self._current_pos: Optional[QPoint] = None
         self._is_selecting = False
+
+    def set_ui_language(self, lang: str) -> None:
+        self._ui_language = lang
+        self.update()
 
     def start_selection(self, target_screen=None):
         """Covers all screens or the specified screen and activates selection mode."""
@@ -160,5 +167,5 @@ class RegionSelector(QWidget):
             # Help text when not actively dragging
             painter.setFont(QFont("Segoe UI", 12))
             painter.setPen(QColor(240, 240, 245, 220))
-            help_text = "Click and drag to select dialogue region. Press ESC or Right-Click to cancel."
+            help_text = tr(self._ui_language, "selector_help")
             painter.drawText(self.rect(), Qt.AlignmentFlag.AlignCenter, help_text)

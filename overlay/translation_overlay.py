@@ -16,6 +16,7 @@ from PySide6.QtWidgets import (
 )
 
 from app.settings_manager import SettingsManager
+from app.i18n import tr, DEFAULT_UI_LANGUAGE
 
 logger = logging.getLogger(__name__)
 
@@ -34,6 +35,7 @@ class TranslationOverlay(QWidget):
     def __init__(self, settings_manager: Optional[SettingsManager] = None, parent=None):
         super().__init__(parent)
         self.settings = settings_manager or SettingsManager()
+        self._ui_language: str = self.settings.get("ui_language", DEFAULT_UI_LANGUAGE)
         self._latest_seq_id: int = 0
         self._is_locked: bool = self.settings.get("overlay_click_through", True)
         self._drag_start_pos: Optional[QPoint] = None
@@ -63,10 +65,10 @@ class TranslationOverlay(QWidget):
         self.top_bar_layout.setContentsMargins(4, 2, 4, 2)
         self.top_bar_layout.setSpacing(6)
 
-        self.title_label = QLabel("Game Translation Overlay")
+        self.title_label = QLabel(tr(self._ui_language, "overlay_title"))
         self.title_label.setStyleSheet("color: #70757F; font-size: 11px; font-weight: bold;")
 
-        self.lock_btn = QPushButton("🔒 Click-Through")
+        self.lock_btn = QPushButton(tr(self._ui_language, "overlay_lock_locked"))
         self.lock_btn.setStyleSheet(
             "background-color: #23272F; color: #00E5FF; border: 1px solid #3A3F4B; "
             "border-radius: 3px; padding: 2px 8px; font-size: 11px;"
@@ -93,7 +95,7 @@ class TranslationOverlay(QWidget):
         self.main_layout.addWidget(self.orig_label)
 
         # 3. Vietnamese translation text label (Primary)
-        self.trans_label = QLabel("Chờ câu thoại tiếp theo...")
+        self.trans_label = QLabel(tr(self._ui_language, "overlay_waiting"))
         self.trans_label.setWordWrap(True)
         self.trans_label.setStyleSheet(
             "color: #FFFFFF; font-size: 18px; font-weight: bold; line-height: 1.3;"
@@ -160,9 +162,16 @@ class TranslationOverlay(QWidget):
 
     def clear_dialogue(self):
         self.orig_label.clear()
-        self.trans_label.setText("Chờ câu thoại tiếp theo...")
+        self.trans_label.setText(tr(self._ui_language, "overlay_waiting"))
         self._latest_seq_id = 0
         self.update()
+
+    def set_ui_language(self, lang: str):
+        self._ui_language = lang
+        self.title_label.setText(tr(lang, "overlay_title"))
+        self._update_lock_ui()
+        if self._latest_seq_id == 0:
+            self.trans_label.setText(tr(lang, "overlay_waiting"))
 
     def toggle_click_through(self):
         self.set_click_through(not self._is_locked)
@@ -192,11 +201,11 @@ class TranslationOverlay(QWidget):
         if self._is_locked:
             self.top_bar.setVisible(False)
             self.size_grip.setVisible(False)
-            self.lock_btn.setText("🔒 Click-Through")
+            self.lock_btn.setText(tr(self._ui_language, "overlay_lock_locked"))
         else:
             self.top_bar.setVisible(True)
             self.size_grip.setVisible(True)
-            self.lock_btn.setText("🔓 Unlocked (Editing)")
+            self.lock_btn.setText(tr(self._ui_language, "overlay_lock_unlocked"))
 
     # Mouse drag repositioning when unlocked
     def mousePressEvent(self, event):

@@ -36,3 +36,224 @@
 2026-11-25 11:09:21,370 [INFO] [app.hotkey_manager]: Registered global hotkey F9 (ID 1002)
 2026-11-25 11:09:21,370 [INFO] [app.hotkey_manager]: Registered global hotkey F10 (ID 1003)
 2026-11-25 11:09:21,370 [INFO] [app.hotkey_manager]: Registered global hotkey F11 (ID 1004)
+2026-11-25 11:12:38,431 [INFO] [main]: Starting Game Translator Application...
+2026-11-25 11:12:38,457 [INFO] [app.settings_manager]: Successfully loaded settings from config\settings.json
+2026-11-25 11:12:38,538 [INFO] [app.hotkey_manager]: Registered global hotkey F8 (ID 1001)
+2026-11-25 11:12:38,539 [INFO] [app.hotkey_manager]: Registered global hotkey F9 (ID 1002)
+2026-11-25 11:12:38,539 [INFO] [app.hotkey_manager]: Registered global hotkey F10 (ID 1003)
+2026-11-25 11:12:38,539 [INFO] [app.hotkey_manager]: Registered global hotkey F11 (ID 1004)
+2026-11-25 11:16:15,673 [INFO] [main]: Starting Game Translator Application...
+2026-11-25 11:16:15,695 [INFO] [app.settings_manager]: Successfully loaded settings from config\settings.json
+2026-11-25 11:16:15,742 [INFO] [app.hotkey_manager]: Registered global hotkey F8 (ID 1001)
+2026-11-25 11:16:15,742 [INFO] [app.hotkey_manager]: Registered global hotkey F9 (ID 1002)
+2026-11-25 11:16:15,742 [INFO] [app.hotkey_manager]: Registered global hotkey F10 (ID 1003)
+2026-11-25 11:16:15,743 [INFO] [app.hotkey_manager]: Registered global hotkey F11 (ID 1004)
+2026-11-25 11:16:47,749 [INFO] [overlay.translation_overlay]: Overlay click-through set to: False
+2026-11-25 11:16:48,460 [INFO] [overlay.translation_overlay]: Overlay click-through set to: False
+2026-11-25 11:19:07,695 [INFO] [workers.translation_worker]: TranslationWorker thread started with provider: Google Translate (Free)
+2026-11-25 11:19:07,695 [INFO] [workers.capture_worker]: CaptureWorker thread started.
+2026-11-25 11:19:07,696 [INFO] [workers.ocr_worker]: OCRWorker thread started.
+2026-11-25 11:19:07,794 [WARNING] [ocr.ocr_engine]: Windows Media OCR unavailable (DLL load failed while importing _winrt: An Application Control policy has blocked this file.). Falling back to RapidOCR.
+2026-11-25 11:19:08,085 [INFO] [ocr.ocr_engine]: AutoOCREngine selected: RapidOCR (ONNX)
+2026-11-25 11:19:09,240 [INFO] [ocr.dialogue_detector]: New dialogue detected [Seq 1]: 'Game TranslatorDichHoi ThoaiGame ThoiGian GAMETRANSLATOR DichHoitho CaiDatChupManHinh' (conf: 0.84)
+2026-11-25 11:19:11,044 [INFO] [app.main_window]: Translation displayed [Seq 1]: 'Game TranslatorDichHoi ThoạiGame ThoiGian GAMETRANSLATOR DichHoitho CaiDatChupManHinh' ([TRỰC TIẾP] in 1789.2 ms)
+2026-11-25 11:19:18,974 [INFO] [overlay.translation_overlay]: Overlay click-through set to: True
+2026-11-25 11:19:30,604 [INFO] [overlay.translation_overlay]: Overlay click-through set to: False
+2026-11-25 11:19:38,047 [INFO] [ocr.dialogue_detector]: New dialogue detected [Seq 2]: 'Game Translator Real-time Dialogue Translation GAMETRANSLATOR Real-TimeLo Capture Settings (Milestone' (conf: 0.87)
+2026-11-25 11:19:38,050 [INFO] [translation.translation_scheduler]: Discarding outdated pending translation [Seq 1] for newer [Seq 2]
+2026-11-25 11:19:38,050 [INFO] [app.main_window]: Discarded stale translation result [Seq 1] to protect newer live dialogue.
+2026-11-25 11:19:38,779 [INFO] [app.main_window]: Translation displayed [Seq 2]: 'Game Translator Dịch hội thoại trong thời gian thực GAMETRANSLATOR Cài đặt chụp Lo thời gian thực (Cột mốc' ([LIVE] in 715.3 ms)
+2026-11-25 11:19:53,408 [INFO] [ocr.dialogue_detector]: New dialogue detected [Seq 3]: 'Game Translator Real-time Dialogue Translation GAMETDAAICIATOD DT hietke skin Bobot Captu Tep Chinh sufa Dangxem' (conf: 0.78)
+2026-11-25 11:19:53,413 [INFO] [translation.translation_scheduler]: Discarding outdated pending translation [Seq 2] for newer [Seq 3]
+2026-11-25 11:19:53,414 [INFO] [app.main_window]: Discarded stale translation result [Seq 2] to protect newer live dialogue.
+2026-11-25 11:19:54,053 [INFO] [ocr.dialogue_detector]: New dialogue detected [Seq 4]: 'hiet ke skin Bobot Khung Tep Chinh sua Dang xem MAU CHUYEN DONG GIUA HAI PROMPT FR (Then Now, di toi camera lia theo' (conf: 0.75)
+2026-11-25 11:19:54,056 [INFO] [translation.translation_scheduler]: Discarding outdated pending translation [Seq 3] for newer [Seq 4]
+2026-11-25 11:19:54,057 [INFO] [app.main_window]: Discarded stale translation result [Seq 3] to protect newer live dialogue.
+2026-11-25 11:19:54,060 [INFO] [app.main_window]: Translation displayed [Seq 3]: 'Game Translator Dịch hội thoại thời gian thực GAMETDAAICIATOD DT hietke skin Bobot Captu Tep Chinh sufa Dangxem' ([LIVE] in 628.5 ms)
+2026-11-25 11:19:54,217 [INFO] [app.main_window]: Translation displayed [Seq 4]: 'hiet ke skin Bobot Khung Tep Chinh sua Dang xem MAU CHUYEN DONG GIUA HAI PROMPT FR (Then Now, di toi camera lia theo' ([LIVE] in 148.6 ms)
+2026-11-25 11:19:54,501 [INFO] [ocr.dialogue_detector]: New dialogue detected [Seq 5]: 'hung mau prompt mau cl Tep Chinh sua Dang xem' (conf: 0.80)
+2026-11-25 11:19:54,503 [INFO] [translation.translation_scheduler]: Discarding outdated pending translation [Seq 4] for newer [Seq 5]
+2026-11-25 11:19:54,504 [INFO] [app.main_window]: Discarded stale translation result [Seq 4] to protect newer live dialogue.
+2026-11-25 11:19:54,665 [INFO] [app.main_window]: Translation displayed [Seq 5]: 'hung mau prompt mau cl Tep Chinh sua Dang xem' ([LIVE] in 151.5 ms)
+2026-11-25 11:20:28,379 [INFO] [ocr.dialogue_detector]: New dialogue detected [Seq 6]: 'hung mau prompt mau cl Tép Chinh sua Dang xem hi. how you. My Tuan, are name fro' (conf: 0.74)
+2026-11-25 11:20:28,382 [INFO] [translation.translation_scheduler]: Discarding outdated pending translation [Seq 5] for newer [Seq 6]
+2026-11-25 11:20:28,384 [INFO] [app.main_window]: Discarded stale translation result [Seq 5] to protect newer live dialogue.
+2026-11-25 11:20:28,560 [INFO] [app.main_window]: Translation displayed [Seq 6]: 'hung mau prompt mau cl Tép Chinh sua Dang xem hi. how you. My Tuan, are name fro' ([LIVE] in 159.3 ms)
+2026-11-25 11:20:29,867 [INFO] [ocr.dialogue_detector]: New dialogue detected [Seq 7]: 'hung mau prompt mau cl Tep Chinh ette Dang yem GameTranslationOverlay hi, Tuan howare you. hame frol ungmgupromptmau' (conf: 0.73)
+2026-11-25 11:20:29,870 [INFO] [translation.translation_scheduler]: Discarding outdated pending translation [Seq 6] for newer [Seq 7]
+2026-11-25 11:20:29,870 [INFO] [app.main_window]: Discarded stale translation result [Seq 6] to protect newer live dialogue.
+2026-11-25 11:20:30,632 [INFO] [ocr.dialogue_detector]: New dialogue detected [Seq 8]: 'hung mau prompt mau cl Tep Chinh sua Dang xem GameTranslationOverlay hi, how are you. My Tuan, name frol hung mau prompt mau cl Tep Chinh sua Dang xem' (conf: 0.77)
+2026-11-25 11:20:30,634 [INFO] [translation.translation_scheduler]: Discarding outdated pending translation [Seq 7] for newer [Seq 8]
+2026-11-25 11:20:30,634 [INFO] [app.main_window]: Discarded stale translation result [Seq 7] to protect newer live dialogue.
+2026-11-25 11:20:31,641 [INFO] [app.main_window]: Translation displayed [Seq 7]: 'hưng mau nhắc mau cl Tep Chinh ette Đăng yem GameTranslationOverlay xin chào, Tuan bạn khỏe không. hame vui vẻ ungmgupproptmau' ([LIVE] in 1761.1 ms)
+2026-11-25 11:20:31,857 [INFO] [app.main_window]: Translation displayed [Seq 8]: 'hung mau prompt mau cl Tep Chinh sua Dang xem GameTranslationOverlay hi, how are you. My Tuan, name frol hung mau prompt mau cl Tep Chinh sua Dang xem' ([LIVE] in 203.1 ms)
+2026-11-25 11:20:35,085 [INFO] [ocr.dialogue_detector]: New dialogue detected [Seq 9]: 'hung mauprompt mau cl Tep Chinh sua Dang xem hi, how you. My Tuan, are name frol' (conf: 0.74)
+2026-11-25 11:20:35,088 [INFO] [translation.translation_scheduler]: Discarding outdated pending translation [Seq 8] for newer [Seq 9]
+2026-11-25 11:20:35,089 [INFO] [app.main_window]: Discarded stale translation result [Seq 8] to protect newer live dialogue.
+2026-11-25 11:20:35,706 [INFO] [app.main_window]: Translation displayed [Seq 9]: 'hung mauprompt mau cl Tep Chinh sua Dang xem hi, how you. My Tuan, are name frol' ([LIVE] in 590.8 ms)
+2026-11-25 11:20:36,567 [INFO] [ocr.dialogue_detector]: New dialogue detected [Seq 10]: 'Game Translator Real-time Dialogue Translation GAMETRANSLATOR Real-TimeLo Capture Settings (Milestone' (conf: 0.87)
+2026-11-25 11:20:36,575 [INFO] [workers.translation_worker]: Translation cache hit [Seq 10]: 'Game Translator Real-time Dialogue Translation GAMETRANSLATOR Real-TimeLo Capture Settings (Milestone' -> 'Game Translator Dịch hội thoại trong thời gian thực GAMETRANSLATOR Cài đặt chụp Lo thời gian thực (Cột mốc'
+2026-11-25 11:20:36,576 [INFO] [app.main_window]: Translation displayed [Seq 10]: 'Game Translator Dịch hội thoại trong thời gian thực GAMETRANSLATOR Cài đặt chụp Lo thời gian thực (Cột mốc' ([CACHED] in 0.5 ms)
+2026-11-25 11:20:38,203 [INFO] [workers.capture_worker]: CaptureWorker thread exited.
+2026-11-25 11:20:38,206 [INFO] [workers.capture_worker]: CaptureWorker stopped.
+2026-11-25 11:20:38,206 [INFO] [workers.ocr_worker]: OCRWorker thread exited.
+2026-11-25 11:20:38,208 [INFO] [workers.ocr_worker]: OCRWorker stopped.
+2026-11-25 11:20:38,216 [INFO] [workers.translation_worker]: TranslationWorker thread exited.
+2026-11-25 11:20:38,217 [INFO] [workers.translation_worker]: TranslationWorker stopped.
+2026-11-25 11:20:48,740 [INFO] [overlay.translation_overlay]: Overlay click-through set to: False
+2026-11-25 11:21:07,940 [INFO] [workers.translation_worker]: TranslationWorker thread started with provider: Google Translate (Free)
+2026-11-25 11:21:07,940 [INFO] [workers.ocr_worker]: OCRWorker thread started.
+2026-11-25 11:21:07,941 [INFO] [workers.capture_worker]: CaptureWorker thread started.
+2026-11-25 11:21:07,993 [WARNING] [ocr.ocr_engine]: Windows Media OCR unavailable (DLL load failed while importing _winrt: An Application Control policy has blocked this file.). Falling back to RapidOCR.
+2026-11-25 11:21:08,106 [INFO] [ocr.ocr_engine]: AutoOCREngine selected: RapidOCR (ONNX)
+2026-11-25 11:21:09,294 [INFO] [ocr.dialogue_detector]: New dialogue detected [Seq 1]: 'Game Translator Real-time Dialogue Translation GAMETRANSLATOR Real-TimeLo GameTranslationOverlay Capture Settings (Milestone1)' (conf: 0.86)
+2026-11-25 11:21:09,939 [INFO] [app.main_window]: Translation displayed [Seq 1]: 'Game Translator Dịch hội thoại trong thời gian thực GAMETRANSLATOR Real-TimeLo GameTranslationCài đặt chụp lớp phủ (Milestone1)' ([LIVE] in 627.3 ms)
+2026-11-25 11:21:10,847 [INFO] [ocr.dialogue_detector]: New dialogue detected [Seq 2]: 'Game Translator Real-time Dialogue Translation GAMETRANSATOR Real-TimeLo GameTranslationOverlay Capture Settings (Milestone 1) GameTranslatorReal-timeDialoque Tran' (conf: 0.82)
+2026-11-25 11:21:10,850 [INFO] [translation.translation_scheduler]: Discarding outdated pending translation [Seq 1] for newer [Seq 2]
+2026-11-25 11:21:10,850 [INFO] [app.main_window]: Discarded stale translation result [Seq 1] to protect newer live dialogue.
+2026-11-25 11:21:11,417 [INFO] [app.main_window]: Translation displayed [Seq 2]: 'Game Translator Dịch hội thoại trong thời gian thực GAMETRANSATOR Real-TimeLo GameTranslationCài đặt chụp lớp phủ (Cột mốc 1) GameTranslatorThời gian thựcDialoque Tran' ([LIVE] in 524.2 ms)
+2026-11-25 11:21:11,825 [INFO] [ocr.dialogue_detector]: New dialogue detected [Seq 3]: 'Game Translator Real-time Dialogue Translation hung mau prompt GameTranslationOverlay Tep Chinh sufa Dang xem Cal Game.TranslatorReal-timeDialoque_Tran areyou.' (conf: 0.81)
+2026-11-25 11:21:11,828 [INFO] [translation.translation_scheduler]: Discarding outdated pending translation [Seq 2] for newer [Seq 3]
+2026-11-25 11:21:11,828 [INFO] [app.main_window]: Discarded stale translation result [Seq 2] to protect newer live dialogue.
+2026-11-25 11:21:12,688 [INFO] [app.main_window]: Translation displayed [Seq 3]: 'Game Translator Dịch đối thoại thời gian thực hung mau nhắc GameTranslationOverlay Tep Chinh sufa Đặng xem Cal Game.TranslatorReal-timeDialoque_Tran areyou.' ([LIVE] in 846.8 ms)
+2026-11-25 11:21:12,701 [INFO] [ocr.dialogue_detector]: New dialogue detected [Seq 4]: 'Game Translator - Real-time Dialogue Translation hunc mau prompt GameTranslationOverlay GameTranslatorReal-timeDialoque Cal Tran GameTranslatorReal-timeDialoque Tran' (conf: 0.81)
+2026-11-25 11:21:12,704 [INFO] [translation.translation_scheduler]: Discarding outdated pending translation [Seq 3] for newer [Seq 4]
+2026-11-25 11:21:12,704 [INFO] [app.main_window]: Discarded stale translation result [Seq 3] to protect newer live dialogue.
+2026-11-25 11:21:14,008 [INFO] [app.main_window]: Translation displayed [Seq 4]: 'Game Translator - Dịch hội thoại thời gian thực hunc mau nhắc GameTranslationOverlay GameTranslatorThời gian thựcDialoque Cal Tran GameTranslatorThời gian thựcDialoque Tran' ([LIVE] in 1288.8 ms)
+2026-11-25 11:21:14,060 [INFO] [ocr.dialogue_detector]: New dialogue detected [Seq 5]: 'Game Translator - Real-time Dialogue Translation hung mau prompt GameTranslationOverlay Tep Chinhsua Dang xem Cal GameTranslator-Real-timeDialoque Tra GameTranslatorReal-timeDialogueTrann' (conf: 0.81)
+2026-11-25 11:21:14,062 [INFO] [translation.translation_scheduler]: Discarding outdated pending translation [Seq 4] for newer [Seq 5]
+2026-11-25 11:21:14,062 [INFO] [app.main_window]: Discarded stale translation result [Seq 4] to protect newer live dialogue.
+2026-11-25 11:21:15,220 [INFO] [app.main_window]: Translation displayed [Seq 5]: 'Game Translator - Dịch đối thoại thời gian thực hung mau nhắc GameTranslationOverlay Tep Chinhsua Đặng xem Cal GameTranslator-Real-timeDialoque Tra GameTranslatorReal-timeDialogueTrann' ([LIVE] in 1142.1 ms)
+2026-11-25 11:21:15,262 [INFO] [ocr.dialogue_detector]: New dialogue detected [Seq 6]: 'Game Translator - Real-time Dialogue Translation hung mau prompt GameTranslationOverlay Game TranslatorVReal-timeDialogue Tra Cal GameTranslator-Real-timeDialoqueTra G My Dich hoi' (conf: 0.83)
+2026-11-25 11:21:15,264 [INFO] [translation.translation_scheduler]: Discarding outdated pending translation [Seq 5] for newer [Seq 6]
+2026-11-25 11:21:15,264 [INFO] [app.main_window]: Discarded stale translation result [Seq 5] to protect newer live dialogue.
+2026-11-25 11:21:16,669 [INFO] [app.main_window]: Translation displayed [Seq 6]: 'Game Translator - Dịch hội thoại thời gian thực hung mau nhắc GameTranslationOverlay Game TranslatorVReal-timeDialogue Tra Cal GameTranslator-Real-timeDialoqueTra G My Dịch hoi' ([LIVE] in 1387.5 ms)
+2026-11-25 11:21:18,334 [INFO] [ocr.dialogue_detector]: New dialogue detected [Seq 7]: 'Game Translator Real-time Dialogue Translation hung mau prompt ma Tep Chinh sua Dang xem Cal haslatibfoverlay My name Game Tuan' (conf: 0.74)
+2026-11-25 11:21:18,337 [INFO] [translation.translation_scheduler]: Discarding outdated pending translation [Seq 6] for newer [Seq 7]
+2026-11-25 11:21:18,337 [INFO] [app.main_window]: Discarded stale translation result [Seq 6] to protect newer live dialogue.
+2026-11-25 11:21:19,205 [INFO] [ocr.dialogue_detector]: New dialogue detected [Seq 8]: 'Game Translator Real-time Dialogue Translation hung mau prompt ma Tep Chinh sua Dang xem Ca GameTranslationOverlay My hi. how areyou. name Tuan' (conf: 0.75)
+2026-11-25 11:21:19,208 [INFO] [translation.translation_scheduler]: Discarding outdated pending translation [Seq 7] for newer [Seq 8]
+2026-11-25 11:21:19,208 [INFO] [app.main_window]: Discarded stale translation result [Seq 7] to protect newer live dialogue.
+2026-11-25 11:21:19,460 [INFO] [app.main_window]: Translation displayed [Seq 7]: 'Game Translator Đối thoại thời gian thực Dịch hung mau nhắc ma Tep Chính sua Đặng xem Cal haslatibfoverlay Tên tôi Game Tuan' ([LIVE] in 1113.1 ms)
+2026-11-25 11:21:20,379 [INFO] [app.main_window]: Translation displayed [Seq 8]: 'Game Translator Real-time Dialogue Translation hung mau mau ma Tep Chinh sua Dang xem Ca GameTranslationOverlay My hi. Bạn khỏe không. tên Tuấn' ([LIVE] in 902.8 ms)
+2026-11-25 11:21:32,047 [INFO] [ocr.dialogue_detector]: New dialogue detected [Seq 9]: 'Game Translator Real-time Dialogue Translation GAM hung maupromp Tan Chinh sita Dana Capture vem GameTranslationOverlay are Mvname' (conf: 0.73)
+2026-11-25 11:21:32,049 [INFO] [translation.translation_scheduler]: Discarding outdated pending translation [Seq 8] for newer [Seq 9]
+2026-11-25 11:21:32,050 [INFO] [app.main_window]: Discarded stale translation result [Seq 8] to protect newer live dialogue.
+2026-11-25 11:21:32,866 [INFO] [ocr.dialogue_detector]: New dialogue detected [Seq 10]: 'Game Translator -Real-time Dialogue Translation GAMETRANSLATOR Rea-meLo Capture Settings(Milestone GameTranslationOverlay' (conf: 0.86)
+2026-11-25 11:21:32,868 [INFO] [translation.translation_scheduler]: Discarding outdated pending translation [Seq 9] for newer [Seq 10]
+2026-11-25 11:21:32,868 [INFO] [app.main_window]: Discarded stale translation result [Seq 9] to protect newer live dialogue.
+2026-11-25 11:21:33,001 [INFO] [app.main_window]: Translation displayed [Seq 9]: 'Game Translator Dịch đối thoại thời gian thực GAM hung maupromp Tan Chinh sita Dana Capture vem GameTranslationOverlay are Mvname' ([LIVE] in 941.0 ms)
+2026-11-25 11:21:33,660 [INFO] [app.main_window]: Translation displayed [Seq 10]: 'Trình dịch trò chơi -Dịch đối thoại theo thời gian thực GAMETRANSLATOR Cài đặt ghi lại Rea-meLo (Lớp phủ dịch trò chơi cột mốc' ([LIVE] in 644.6 ms)
+2026-11-25 11:21:34,532 [INFO] [ocr.dialogue_detector]: New dialogue detected [Seq 11]: 'Game Translator -Real-time Dialogue Translation GAMETRANSLATOR Real-TimeLo Capture Settings (Milestone' (conf: 0.86)
+2026-11-25 11:21:34,541 [INFO] [workers.translation_worker]: Translation cache hit [Seq 11]: 'Game Translator -Real-time Dialogue Translation GAMETRANSLATOR Real-TimeLo Capture Settings (Milestone' -> 'Game Translator Dịch hội thoại trong thời gian thực GAMETRANSLATOR Cài đặt chụp Lo thời gian thực (Cột mốc'
+2026-11-25 11:21:34,543 [INFO] [app.main_window]: Translation displayed [Seq 11]: 'Game Translator Dịch hội thoại trong thời gian thực GAMETRANSLATOR Cài đặt chụp Lo thời gian thực (Cột mốc' ([CACHED] in 0.5 ms)
+2026-11-25 11:21:46,014 [INFO] [workers.capture_worker]: CaptureWorker thread exited.
+2026-11-25 11:21:46,017 [INFO] [workers.capture_worker]: CaptureWorker stopped.
+2026-11-25 11:21:46,017 [INFO] [workers.ocr_worker]: OCRWorker thread exited.
+2026-11-25 11:21:46,017 [INFO] [workers.ocr_worker]: OCRWorker stopped.
+2026-11-25 11:21:46,024 [INFO] [workers.translation_worker]: TranslationWorker thread exited.
+2026-11-25 11:21:46,025 [INFO] [workers.translation_worker]: TranslationWorker stopped.
+2026-11-25 11:22:09,908 [INFO] [workers.translation_worker]: TranslationWorker thread started with provider: Google Translate (Free)
+2026-11-25 11:22:09,908 [INFO] [workers.ocr_worker]: OCRWorker thread started.
+2026-11-25 11:22:09,909 [INFO] [workers.capture_worker]: CaptureWorker thread started.
+2026-11-25 11:22:09,963 [WARNING] [ocr.ocr_engine]: Windows Media OCR unavailable (DLL load failed while importing _winrt: An Application Control policy has blocked this file.). Falling back to RapidOCR.
+2026-11-25 11:22:10,080 [INFO] [ocr.ocr_engine]: AutoOCREngine selected: RapidOCR (ONNX)
+2026-11-25 11:22:11,314 [INFO] [ocr.dialogue_detector]: New dialogue detected [Seq 1]: 'Game TranslatorReal-time Dialogue Translation GAMETRANSLATOR Rea-meLo Capture Settings (Milestone' (conf: 0.85)
+2026-11-25 11:22:19,485 [ERROR] [translation.providers.google_provider]: GoogleFreeProvider error: <urlopen error timed out>
+2026-11-25 11:22:19,486 [WARNING] [workers.translation_worker]: Translation failed [Seq 1]: <urlopen error timed out>
+2026-11-25 11:22:30,653 [INFO] [workers.capture_worker]: CaptureWorker thread exited.
+2026-11-25 11:22:30,655 [INFO] [workers.capture_worker]: CaptureWorker stopped.
+2026-11-25 11:22:30,656 [INFO] [workers.ocr_worker]: OCRWorker thread exited.
+2026-11-25 11:22:30,657 [INFO] [workers.ocr_worker]: OCRWorker stopped.
+2026-11-25 11:22:30,665 [INFO] [workers.translation_worker]: TranslationWorker thread exited.
+2026-11-25 11:22:30,666 [INFO] [workers.translation_worker]: TranslationWorker stopped.
+2026-11-25 11:22:58,038 [INFO] [main]: Starting Game Translator Application...
+2026-11-25 11:22:58,061 [INFO] [app.settings_manager]: Successfully loaded settings from config\settings.json
+2026-11-25 11:22:58,117 [INFO] [app.hotkey_manager]: Registered global hotkey F8 (ID 1001)
+2026-11-25 11:22:58,117 [INFO] [app.hotkey_manager]: Registered global hotkey F9 (ID 1002)
+2026-11-25 11:22:58,117 [INFO] [app.hotkey_manager]: Registered global hotkey F10 (ID 1003)
+2026-11-25 11:22:58,118 [INFO] [app.hotkey_manager]: Registered global hotkey F11 (ID 1004)
+2026-11-25 11:23:07,037 [INFO] [workers.translation_worker]: TranslationWorker thread started with provider: Google Translate (Free)
+2026-11-25 11:23:07,037 [INFO] [workers.ocr_worker]: OCRWorker thread started.
+2026-11-25 11:23:07,038 [INFO] [workers.capture_worker]: CaptureWorker thread started.
+2026-11-25 11:23:07,162 [WARNING] [ocr.ocr_engine]: Windows Media OCR unavailable (DLL load failed while importing _winrt: An Application Control policy has blocked this file.). Falling back to RapidOCR.
+2026-11-25 11:23:07,452 [INFO] [ocr.ocr_engine]: AutoOCREngine selected: RapidOCR (ONNX)
+2026-11-25 11:23:08,681 [INFO] [ocr.dialogue_detector]: New dialogue detected [Seq 1]: 'Game Translator Real-time Dialogue Translation GAMETRANSLATOR Rea-meLo Capture Settings (Milestone' (conf: 0.85)
+2026-11-25 11:23:09,394 [INFO] [app.main_window]: Translation displayed [Seq 1]: 'Game Translator Dịch hội thoại trong thời gian thực GAMETRANSLATOR Cài đặt chụp Rea-meLo (Cột mốc' ([LIVE] in 698.7 ms)
+2026-11-25 11:23:11,045 [INFO] [ocr.dialogue_detector]: New dialogue detected [Seq 2]: 'Game Translator Real-time Dialogue Translation hung GAMETRANSL Tep Chinhsua Capture Settings how are you' (conf: 0.79)
+2026-11-25 11:23:11,049 [INFO] [translation.translation_scheduler]: Discarding outdated pending translation [Seq 1] for newer [Seq 2]
+2026-11-25 11:23:11,049 [INFO] [app.main_window]: Discarded stale translation result [Seq 1] to protect newer live dialogue.
+2026-11-25 11:23:11,838 [INFO] [ocr.dialogue_detector]: New dialogue detected [Seq 3]: 'Game Translator -Real-time Dialogue Translation GAMETRANSLATOR Real-TimeLo Capture Settings (Milestone' (conf: 0.86)
+2026-11-25 11:23:11,848 [INFO] [workers.translation_worker]: Translation cache hit [Seq 3]: 'Game Translator -Real-time Dialogue Translation GAMETRANSLATOR Real-TimeLo Capture Settings (Milestone' -> 'Game Translator Dịch hội thoại trong thời gian thực GAMETRANSLATOR Cài đặt chụp Lo thời gian thực (Cột mốc'
+2026-11-25 11:23:11,849 [INFO] [app.main_window]: Translation displayed [Seq 3]: 'Game Translator Dịch hội thoại trong thời gian thực GAMETRANSLATOR Cài đặt chụp Lo thời gian thực (Cột mốc' ([CACHED] in 0.5 ms)
+2026-11-25 11:23:12,410 [WARNING] [translation.translation_scheduler]: Rejecting stale translation [Seq 2]; current visible is [Seq 3]
+2026-11-25 11:23:12,410 [INFO] [app.main_window]: Discarded stale translation result [Seq 2] to protect newer live dialogue.
+2026-11-25 11:23:18,058 [INFO] [ocr.dialogue_detector]: New dialogue detected [Seq 4]: 'Game Translator Real-time Dialogue Translation hung mauprompt GA Tep Chinh sua Dang Ixem Capt how you.My are name Tua' (conf: 0.75)
+2026-11-25 11:23:18,063 [INFO] [translation.translation_scheduler]: Discarding outdated pending translation [Seq 2] for newer [Seq 4]
+2026-11-25 11:23:18,063 [INFO] [app.main_window]: Discarded stale translation result [Seq 2] to protect newer live dialogue.
+2026-11-25 11:23:18,708 [INFO] [ocr.dialogue_detector]: New dialogue detected [Seq 5]: 'Al tao prompt.txt Thiet k Tep Chinh sua Dang xem how you. My Tuan. are name from' (conf: 0.77)
+2026-11-25 11:23:18,710 [INFO] [translation.translation_scheduler]: Discarding outdated pending translation [Seq 4] for newer [Seq 5]
+2026-11-25 11:23:18,710 [INFO] [app.main_window]: Discarded stale translation result [Seq 4] to protect newer live dialogue.
+2026-11-25 11:23:19,227 [INFO] [app.main_window]: Translation displayed [Seq 4]: 'Game Translator Real-time Dialogue Translation hung mauprompt GA Tep Chinh sua Đặng Ixem Capt bạn.Tên tôi là Tua' ([LIVE] in 1148.8 ms)
+2026-11-25 11:23:19,831 [INFO] [ocr.dialogue_detector]: New dialogue detected [Seq 6]: 'Game Translator -Real-time Dialogue Translation GAMETRANSLATOR Real-TimeLo Capture Settings (Milestone' (conf: 0.86)
+2026-11-25 11:23:19,842 [INFO] [workers.translation_worker]: Translation cache hit [Seq 6]: 'Game Translator -Real-time Dialogue Translation GAMETRANSLATOR Real-TimeLo Capture Settings (Milestone' -> 'Game Translator Dịch hội thoại trong thời gian thực GAMETRANSLATOR Cài đặt chụp Lo thời gian thực (Cột mốc'
+2026-11-25 11:23:19,843 [INFO] [app.main_window]: Translation displayed [Seq 6]: 'Game Translator Dịch hội thoại trong thời gian thực GAMETRANSLATOR Cài đặt chụp Lo thời gian thực (Cột mốc' ([CACHED] in 0.5 ms)
+2026-11-25 11:23:19,941 [WARNING] [translation.translation_scheduler]: Rejecting stale translation [Seq 5]; current visible is [Seq 6]
+2026-11-25 11:23:19,943 [INFO] [app.main_window]: Discarded stale translation result [Seq 5] to protect newer live dialogue.
+2026-11-25 11:23:21,008 [INFO] [ocr.dialogue_detector]: New dialogue detected [Seq 7]: 'GameTranslatorReal-time Dialoaue Translation hung mau prompt mau c Tep Chinh sua Dang xem H1 hi, how you. My Tuan, are name from' (conf: 0.77)
+2026-11-25 11:23:21,011 [INFO] [translation.translation_scheduler]: Discarding outdated pending translation [Seq 5] for newer [Seq 7]
+2026-11-25 11:23:21,011 [INFO] [app.main_window]: Discarded stale translation result [Seq 5] to protect newer live dialogue.
+2026-11-25 11:23:21,562 [INFO] [ocr.dialogue_detector]: New dialogue detected [Seq 8]: 'hung mau prompt mau cl Tep Chinh sua Dang xem hi, how you. My Tuan, are name fron' (conf: 0.75)
+2026-11-25 11:23:21,566 [INFO] [translation.translation_scheduler]: Discarding outdated pending translation [Seq 7] for newer [Seq 8]
+2026-11-25 11:23:21,570 [INFO] [app.main_window]: Discarded stale translation result [Seq 7] to protect newer live dialogue.
+2026-11-25 11:23:22,131 [INFO] [app.main_window]: Translation displayed [Seq 7]: 'GameTranslatorDịch thuật Dialoaue thời gian thực hung mau mau c Tep Chính sua Đặng xem H1 hi, bạn thế nào. Mỹ Tuấn, tên từ' ([LIVE] in 1099.8 ms)
+2026-11-25 11:23:22,293 [INFO] [app.main_window]: Translation displayed [Seq 8]: 'hung mau prompt mau cl Tep Chinh sua Dang xem hi, how you. My Tuan, are name fron' ([LIVE] in 151.5 ms)
+2026-11-25 11:23:22,326 [INFO] [ocr.dialogue_detector]: New dialogue detected [Seq 9]: 'hung mau prompt mau cl Tep Chinh sua Dang xem hi, how areGafe/Trahstationroverlayan, fron GameTranslatorReal-timeDialoaue' (conf: 0.79)
+2026-11-25 11:23:22,329 [INFO] [translation.translation_scheduler]: Discarding outdated pending translation [Seq 8] for newer [Seq 9]
+2026-11-25 11:23:22,330 [INFO] [app.main_window]: Discarded stale translation result [Seq 8] to protect newer live dialogue.
+2026-11-25 11:23:22,771 [INFO] [app.main_window]: Translation displayed [Seq 9]: 'hung mau mau cl Tep Chính sua Đặng xem hi, thế nào làGafe/Trahstationroverlayan, fron GameTranslatorReal-timeDialoaue' ([LIVE] in 428.7 ms)
+2026-11-25 11:23:22,881 [INFO] [ocr.dialogue_detector]: New dialogue detected [Seq 10]: 'hung mau prompt mau cl Tep Chinh sua Dang xem Gahe Trahslation'overfay . My Tuan, name fron GameTranslatorReal-timeDialoaue Translationhung' (conf: 0.82)
+2026-11-25 11:23:22,884 [INFO] [translation.translation_scheduler]: Discarding outdated pending translation [Seq 9] for newer [Seq 10]
+2026-11-25 11:23:22,885 [INFO] [app.main_window]: Discarded stale translation result [Seq 9] to protect newer live dialogue.
+2026-11-25 11:23:23,477 [INFO] [app.main_window]: Translation displayed [Seq 10]: 'hưng mau nhắc mau cl Tep Chính sua Đặng xem Gahe Trahslation'overfay . Mỹ Tuân, tên từ GameTranslatorReal-timeDialoaue Translationhung' ([LIVE] in 573.9 ms)
+2026-11-25 11:23:32,463 [INFO] [ocr.dialogue_detector]: New dialogue detected [Seq 11]: 'hung mau prompt mau cl Tép Chinh sua Dang xem hi, how you. My Tuan are name fron' (conf: 0.78)
+2026-11-25 11:23:32,469 [INFO] [translation.translation_scheduler]: Discarding outdated pending translation [Seq 10] for newer [Seq 11]
+2026-11-25 11:23:32,470 [INFO] [app.main_window]: Discarded stale translation result [Seq 10] to protect newer live dialogue.
+2026-11-25 11:23:32,658 [INFO] [app.main_window]: Translation displayed [Seq 11]: 'hung mau prompt mau cl Tép Chinh sua Dang xem hi, how you. My Tuan are name fron' ([LIVE] in 176.4 ms)
+2026-11-25 11:23:46,458 [INFO] [ocr.dialogue_detector]: New dialogue detected [Seq 12]: 'Game Translator Real-time Dialogue Translation GAMETRANSLATOR Real-meLo CaptureSett hung mau prom' (conf: 0.83)
+2026-11-25 11:23:46,460 [INFO] [translation.translation_scheduler]: Discarding outdated pending translation [Seq 11] for newer [Seq 12]
+2026-11-25 11:23:46,460 [INFO] [app.main_window]: Discarded stale translation result [Seq 11] to protect newer live dialogue.
+2026-11-25 11:23:47,448 [INFO] [app.main_window]: Translation displayed [Seq 12]: 'Game Translator Dịch hội thoại thời gian thực GAMETRANSLATOR Real-meLo CaptureSett hung mau vũ hội' ([LIVE] in 980.3 ms)
+2026-11-25 11:23:52,968 [INFO] [ocr.dialogue_detector]: New dialogue detected [Seq 13]: 'File Edit View Go Selection Run Game Translator -- Real-time Dialogue Tran GAMETRANSLATOR Real46' (conf: 0.75)
+2026-11-25 11:23:52,969 [INFO] [translation.translation_scheduler]: Discarding outdated pending translation [Seq 12] for newer [Seq 13]
+2026-11-25 11:23:52,970 [INFO] [app.main_window]: Discarded stale translation result [Seq 12] to protect newer live dialogue.
+2026-11-25 11:23:53,700 [INFO] [ocr.dialogue_detector]: New dialogue detected [Seq 14]: 'File Edit Selection View Run Explorer game-translation pycache Pytest cache 46' (conf: 0.77)
+2026-11-25 11:23:53,701 [INFO] [translation.translation_scheduler]: Discarding outdated pending translation [Seq 13] for newer [Seq 14]
+2026-11-25 11:23:53,701 [INFO] [app.main_window]: Discarded stale translation result [Seq 13] to protect newer live dialogue.
+2026-11-25 11:23:54,435 [INFO] [app.main_window]: Translation displayed [Seq 13]: 'Chỉnh sửa tập tin Xem Đi Lựa chọn Chạy Game Translator -- Đối thoại thời gian thực Tran GAMETRANSLATOR Real46' ([LIVE] in 1453.9 ms)
+2026-11-25 11:23:55,362 [INFO] [app.main_window]: Translation displayed [Seq 14]: 'Chỉnh sửa tập tin Lựa chọn Xem Chạy Explorer pycache dịch trò chơi Pytest cache 46' ([LIVE] in 912.4 ms)
+2026-11-25 11:24:01,833 [INFO] [ocr.dialogue_detector]: New dialogue detected [Seq 15]: 'File Edit Selection View Run Explorer game-translation purarha Game Translator Real-time Dialc py 46' (conf: 0.75)
+2026-11-25 11:24:01,836 [INFO] [translation.translation_scheduler]: Discarding outdated pending translation [Seq 14] for newer [Seq 15]
+2026-11-25 11:24:01,837 [INFO] [app.main_window]: Discarded stale translation result [Seq 14] to protect newer live dialogue.
+2026-11-25 11:24:02,584 [INFO] [ocr.dialogue_detector]: New dialogue detected [Seq 16]: 'Game TranslatorReal-time Dialogue Translation GAMETRANSLATOR Rea-meLo Capture Settings (Milestone' (conf: 0.85)
+2026-11-25 11:24:02,586 [INFO] [translation.translation_scheduler]: Discarding outdated pending translation [Seq 15] for newer [Seq 16]
+2026-11-25 11:24:02,586 [INFO] [app.main_window]: Discarded stale translation result [Seq 15] to protect newer live dialogue.
+2026-11-25 11:24:02,964 [INFO] [app.main_window]: Translation displayed [Seq 15]: 'Chỉnh sửa tập tin Lựa chọn Xem Chạy Explorer dịch trò chơi purarha Trình dịch trò chơi Quay số thời gian thực py 46' ([LIVE] in 1117.7 ms)
+2026-11-25 11:24:03,995 [INFO] [app.main_window]: Translation displayed [Seq 16]: 'Trình dịch trò chơi Dịch đối thoại trong thời gian thực GAMETRANSLATOR Cài đặt chụp Rea-meLo (Cột mốc' ([LIVE] in 1021.1 ms)
+2026-11-25 11:24:04,459 [INFO] [ocr.dialogue_detector]: New dialogue detected [Seq 17]: 'hung mau prompt maucl Tep Chinh sua Dangxem hi, how you. My Tuan, are name fron' (conf: 0.75)
+2026-11-25 11:24:04,461 [INFO] [translation.translation_scheduler]: Discarding outdated pending translation [Seq 16] for newer [Seq 17]
+2026-11-25 11:24:04,461 [INFO] [app.main_window]: Discarded stale translation result [Seq 16] to protect newer live dialogue.
+2026-11-25 11:24:05,738 [INFO] [app.main_window]: Translation displayed [Seq 17]: 'hung mau nhắc maucl Tep Chính sua Dangxem xin chào, bạn khỏe không. Mỹ Tuân, được ghi tên từ trước' ([LIVE] in 1265.3 ms)
+2026-11-25 11:24:14,775 [INFO] [ocr.dialogue_detector]: New dialogue detected [Seq 18]: 'GameIransl TOT Real-timeDialoguelranslation hung mauprompt mau cl TepAΛChinhstaNSLDangxem Real-Time hi,phow areryoumiMytDame) Tuan, fron' (conf: 0.79)
+2026-11-25 11:24:14,781 [INFO] [translation.translation_scheduler]: Discarding outdated pending translation [Seq 17] for newer [Seq 18]
+2026-11-25 11:24:14,781 [INFO] [app.main_window]: Discarded stale translation result [Seq 17] to protect newer live dialogue.
+2026-11-25 11:24:15,419 [INFO] [app.main_window]: Translation displayed [Seq 18]: 'GameIransl TOT Real-timeDialogueranslation hung mauprompt mau cl TepAΛChinhstaNSLDangxem Real-Time hi,phow areryoumiMytDame) Tuan, fron' ([LIVE] in 468.9 ms)
+2026-11-25 11:24:15,507 [INFO] [ocr.dialogue_detector]: New dialogue detected [Seq 19]: 'Game Translator Real-time Dialogue Translation GAMETRANSLATOR Real-TimeLo Capture Settings (Milestone' (conf: 0.87)
+2026-11-25 11:24:15,616 [INFO] [workers.translation_worker]: Translation cache hit [Seq 19]: 'Game Translator Real-time Dialogue Translation GAMETRANSLATOR Real-TimeLo Capture Settings (Milestone' -> 'Game Translator Dịch hội thoại trong thời gian thực GAMETRANSLATOR Cài đặt chụp Lo thời gian thực (Cột mốc'
+2026-11-25 11:24:15,617 [INFO] [app.main_window]: Translation displayed [Seq 19]: 'Game Translator Dịch hội thoại trong thời gian thực GAMETRANSLATOR Cài đặt chụp Lo thời gian thực (Cột mốc' ([CACHED] in 0.5 ms)
+2026-11-25 11:24:16,534 [INFO] [workers.capture_worker]: CaptureWorker thread exited.
+2026-11-25 11:24:16,535 [INFO] [workers.capture_worker]: CaptureWorker stopped.
+2026-11-25 11:24:16,535 [INFO] [workers.ocr_worker]: OCRWorker thread exited.
+2026-11-25 11:24:16,536 [INFO] [workers.ocr_worker]: OCRWorker stopped.
+2026-11-25 11:24:16,542 [INFO] [workers.translation_worker]: TranslationWorker thread exited.
+2026-11-25 11:24:16,543 [INFO] [workers.translation_worker]: TranslationWorker stopped.

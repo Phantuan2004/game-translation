@@ -8,6 +8,7 @@ from typing import Any, Dict, Optional
 logger = logging.getLogger(__name__)
 
 DEFAULT_SETTINGS: Dict[str, Any] = {
+    "ui_language": "vi",
     "monitor_index": 1,
     "capture_region": None,  # dict: {"left": int, "top": int, "width": int, "height": int}
     "capture_interval_ms": 150,
@@ -117,6 +118,11 @@ class SettingsManager:
                 target[k] = v
 
     def _validate(self, settings: Dict[str, Any]) -> None:
+        # Validate UI language
+        ui_lang = settings.get("ui_language", DEFAULT_SETTINGS["ui_language"])
+        if ui_lang not in ("en", "vi"):
+            settings["ui_language"] = DEFAULT_SETTINGS["ui_language"]
+
         # Validate capture interval
         interval = settings.get("capture_interval_ms", 150)
         if not isinstance(interval, (int, float)) or interval < 20 or interval > 5000:

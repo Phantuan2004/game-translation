@@ -1,4 +1,5 @@
 {
+  "ui_language": "en",
   "monitor_index": 1,
   "capture_region": {
     "left": 0,
@@ -16,12 +17,12 @@
   "translation_timeout_sec": 3.0,
   "overlay_enabled": true,
   "overlay_position": {
-    "x": 623,
-    "y": 481
+    "x": -3,
+    "y": 164
   },
   "overlay_size": {
     "width": 800,
-    "height": 180
+    "height": 181
   },
   "overlay_font_size": 18,
   "overlay_text_color": "#FFFFFF",

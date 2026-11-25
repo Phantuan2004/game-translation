@@ -3,3 +3,208 @@ EN: The journey begins now.
 VI: Cuộc hành trình bắt đầu ngay bây giờ.
 ---
 
+[11:19:11]
+EN: Game TranslatorDichHoi ThoaiGame ThoiGian GAMETRANSLATOR DichHoitho CaiDatChupManHinh
+VI: Game TranslatorDichHoi ThoạiGame ThoiGian GAMETRANSLATOR DichHoitho CaiDatChupManHinh
+---
+
+[11:19:38]
+EN: Game Translator Real-time Dialogue Translation GAMETRANSLATOR Real-TimeLo Capture Settings (Milestone
+VI: Game Translator Dịch hội thoại trong thời gian thực GAMETRANSLATOR Cài đặt chụp Lo thời gian thực (Cột mốc
+---
+
+[11:19:54]
+EN: Game Translator Real-time Dialogue Translation GAMETDAAICIATOD DT hietke skin Bobot Captu Tep Chinh sufa Dangxem
+VI: [Translation Skipped: Game advanced rapidly]
+---
+
+[11:19:54]
+EN: hiet ke skin Bobot Khung Tep Chinh sua Dang xem MAU CHUYEN DONG GIUA HAI PROMPT FR (Then Now, di toi camera lia theo
+VI: hiet ke skin Bobot Khung Tep Chinh sua Dang xem MAU CHUYEN DONG GIUA HAI PROMPT FR (Then Now, di toi camera lia theo
+---
+
+[11:19:54]
+EN: hung mau prompt mau cl Tep Chinh sua Dang xem
+VI: hung mau prompt mau cl Tep Chinh sua Dang xem
+---
+
+[11:20:28]
+EN: hung mau prompt mau cl Tép Chinh sua Dang xem hi. how you. My Tuan, are name fro
+VI: hung mau prompt mau cl Tép Chinh sua Dang xem hi. how you. My Tuan, are name fro
+---
+
+[11:20:30]
+EN: hung mau prompt mau cl Tep Chinh ette Dang yem GameTranslationOverlay hi, Tuan howare you. hame frol ungmgupromptmau
+VI: [Translation Skipped: Game advanced rapidly]
+---
+
+[11:20:31]
+EN: hung mau prompt mau cl Tep Chinh sua Dang xem GameTranslationOverlay hi, how are you. My Tuan, name frol hung mau prompt mau cl Tep Chinh sua Dang xem
+VI: hung mau prompt mau cl Tep Chinh sua Dang xem GameTranslationOverlay hi, how are you. My Tuan, name frol hung mau prompt mau cl Tep Chinh sua Dang xem
+---
+
+[11:20:35]
+EN: hung mauprompt mau cl Tep Chinh sua Dang xem hi, how you. My Tuan, are name frol
+VI: hung mauprompt mau cl Tep Chinh sua Dang xem hi, how you. My Tuan, are name frol
+---
+
+[11:20:36]
+EN: Game Translator Real-time Dialogue Translation GAMETRANSLATOR Real-TimeLo Capture Settings (Milestone
+VI: Game Translator Dịch hội thoại trong thời gian thực GAMETRANSLATOR Cài đặt chụp Lo thời gian thực (Cột mốc
+---
+
+[11:21:09]
+EN: Game Translator Real-time Dialogue Translation GAMETRANSLATOR Real-TimeLo GameTranslationOverlay Capture Settings (Milestone1)
+VI: Game Translator Dịch hội thoại trong thời gian thực GAMETRANSLATOR Real-TimeLo GameTranslationCài đặt chụp lớp phủ (Milestone1)
+---
+
+[11:21:11]
+EN: Game Translator Real-time Dialogue Translation GAMETRANSATOR Real-TimeLo GameTranslationOverlay Capture Settings (Milestone 1) GameTranslatorReal-timeDialoque Tran
+VI: Game Translator Dịch hội thoại trong thời gian thực GAMETRANSATOR Real-TimeLo GameTranslationCài đặt chụp lớp phủ (Cột mốc 1) GameTranslatorThời gian thựcDialoque Tran
+---
+
+[11:21:12]
+EN: Game Translator Real-time Dialogue Translation hung mau prompt GameTranslationOverlay Tep Chinh sufa Dang xem Cal Game.TranslatorReal-timeDialoque_Tran areyou.
+VI: Game Translator Dịch đối thoại thời gian thực hung mau nhắc GameTranslationOverlay Tep Chinh sufa Đặng xem Cal Game.TranslatorReal-timeDialoque_Tran areyou.
+---
+
+[11:21:14]
+EN: Game Translator - Real-time Dialogue Translation hunc mau prompt GameTranslationOverlay GameTranslatorReal-timeDialoque Cal Tran GameTranslatorReal-timeDialoque Tran
+VI: Game Translator - Dịch hội thoại thời gian thực hunc mau nhắc GameTranslationOverlay GameTranslatorThời gian thựcDialoque Cal Tran GameTranslatorThời gian thựcDialoque Tran
+---
+
+[11:21:15]
+EN: Game Translator - Real-time Dialogue Translation hung mau prompt GameTranslationOverlay Tep Chinhsua Dang xem Cal GameTranslator-Real-timeDialoque Tra GameTranslatorReal-timeDialogueTrann
+VI: Game Translator - Dịch đối thoại thời gian thực hung mau nhắc GameTranslationOverlay Tep Chinhsua Đặng xem Cal GameTranslator-Real-timeDialoque Tra GameTranslatorReal-timeDialogueTrann
+---
+
+[11:21:16]
+EN: Game Translator - Real-time Dialogue Translation hung mau prompt GameTranslationOverlay Game TranslatorVReal-timeDialogue Tra Cal GameTranslator-Real-timeDialoqueTra G My Dich hoi
+VI: Game Translator - Dịch hội thoại thời gian thực hung mau nhắc GameTranslationOverlay Game TranslatorVReal-timeDialogue Tra Cal GameTranslator-Real-timeDialoqueTra G My Dịch hoi
+---
+
+[11:21:19]
+EN: Game Translator Real-time Dialogue Translation hung mau prompt ma Tep Chinh sua Dang xem Cal haslatibfoverlay My name Game Tuan
+VI: [Translation Skipped: Game advanced rapidly]
+---
+
+[11:21:20]
+EN: Game Translator Real-time Dialogue Translation hung mau prompt ma Tep Chinh sua Dang xem Ca GameTranslationOverlay My hi. how areyou. name Tuan
+VI: Game Translator Real-time Dialogue Translation hung mau mau ma Tep Chinh sua Dang xem Ca GameTranslationOverlay My hi. Bạn khỏe không. tên Tuấn
+---
+
+[11:21:32]
+EN: Game Translator Real-time Dialogue Translation GAM hung maupromp Tan Chinh sita Dana Capture vem GameTranslationOverlay are Mvname
+VI: [Translation Skipped: Game advanced rapidly]
+---
+
+[11:21:33]
+EN: Game Translator -Real-time Dialogue Translation GAMETRANSLATOR Rea-meLo Capture Settings(Milestone GameTranslationOverlay
+VI: Trình dịch trò chơi -Dịch đối thoại theo thời gian thực GAMETRANSLATOR Cài đặt ghi lại Rea-meLo (Lớp phủ dịch trò chơi cột mốc
+---
+
+[11:21:34]
+EN: Game Translator -Real-time Dialogue Translation GAMETRANSLATOR Real-TimeLo Capture Settings (Milestone
+VI: Game Translator Dịch hội thoại trong thời gian thực GAMETRANSLATOR Cài đặt chụp Lo thời gian thực (Cột mốc
+---
+
+[11:22:19]
+EN: Game TranslatorReal-time Dialogue Translation GAMETRANSLATOR Rea-meLo Capture Settings (Milestone
+VI: [Translation Failed: <urlopen error timed out>]
+---
+
+[11:23:09]
+EN: Game Translator Real-time Dialogue Translation GAMETRANSLATOR Rea-meLo Capture Settings (Milestone
+VI: Game Translator Dịch hội thoại trong thời gian thực GAMETRANSLATOR Cài đặt chụp Rea-meLo (Cột mốc
+---
+
+[11:23:11]
+EN: Game Translator -Real-time Dialogue Translation GAMETRANSLATOR Real-TimeLo Capture Settings (Milestone
+VI: Game Translator Dịch hội thoại trong thời gian thực GAMETRANSLATOR Cài đặt chụp Lo thời gian thực (Cột mốc
+---
+
+[11:23:12]
+EN: Game Translator Real-time Dialogue Translation hung GAMETRANSL Tep Chinhsua Capture Settings how are you
+VI: [Translation Skipped: Game advanced rapidly]
+---
+
+[11:23:18]
+EN: Game Translator Real-time Dialogue Translation hung mauprompt GA Tep Chinh sua Dang Ixem Capt how you.My are name Tua
+VI: [Translation Skipped: Game advanced rapidly]
+---
+
+[11:23:19]
+EN: Game Translator -Real-time Dialogue Translation GAMETRANSLATOR Real-TimeLo Capture Settings (Milestone
+VI: Game Translator Dịch hội thoại trong thời gian thực GAMETRANSLATOR Cài đặt chụp Lo thời gian thực (Cột mốc
+---
+
+[11:23:19]
+EN: Al tao prompt.txt Thiet k Tep Chinh sua Dang xem how you. My Tuan. are name from
+VI: [Translation Skipped: Game advanced rapidly]
+---
+
+[11:23:21]
+EN: GameTranslatorReal-time Dialoaue Translation hung mau prompt mau c Tep Chinh sua Dang xem H1 hi, how you. My Tuan, are name from
+VI: [Translation Skipped: Game advanced rapidly]
+---
+
+[11:23:22]
+EN: hung mau prompt mau cl Tep Chinh sua Dang xem hi, how you. My Tuan, are name fron
+VI: hung mau prompt mau cl Tep Chinh sua Dang xem hi, how you. My Tuan, are name fron
+---
+
+[11:23:22]
+EN: hung mau prompt mau cl Tep Chinh sua Dang xem hi, how areGafe/Trahstationroverlayan, fron GameTranslatorReal-timeDialoaue
+VI: hung mau mau cl Tep Chính sua Đặng xem hi, thế nào làGafe/Trahstationroverlayan, fron GameTranslatorReal-timeDialoaue
+---
+
+[11:23:23]
+EN: hung mau prompt mau cl Tep Chinh sua Dang xem Gahe Trahslation'overfay . My Tuan, name fron GameTranslatorReal-timeDialoaue Translationhung
+VI: hưng mau nhắc mau cl Tep Chính sua Đặng xem Gahe Trahslation'overfay . Mỹ Tuân, tên từ GameTranslatorReal-timeDialoaue Translationhung
+---
+
+[11:23:32]
+EN: hung mau prompt mau cl Tép Chinh sua Dang xem hi, how you. My Tuan are name fron
+VI: hung mau prompt mau cl Tép Chinh sua Dang xem hi, how you. My Tuan are name fron
+---
+
+[11:23:47]
+EN: Game Translator Real-time Dialogue Translation GAMETRANSLATOR Real-meLo CaptureSett hung mau prom
+VI: Game Translator Dịch hội thoại thời gian thực GAMETRANSLATOR Real-meLo CaptureSett hung mau vũ hội
+---
+
+[11:23:53]
+EN: File Edit View Go Selection Run Game Translator -- Real-time Dialogue Tran GAMETRANSLATOR Real46
+VI: [Translation Skipped: Game advanced rapidly]
+---
+
+[11:23:55]
+EN: File Edit Selection View Run Explorer game-translation pycache Pytest cache 46
+VI: Chỉnh sửa tập tin Lựa chọn Xem Chạy Explorer pycache dịch trò chơi Pytest cache 46
+---
+
+[11:24:02]
+EN: File Edit Selection View Run Explorer game-translation purarha Game Translator Real-time Dialc py 46
+VI: [Translation Skipped: Game advanced rapidly]
+---
+
+[11:24:03]
+EN: Game TranslatorReal-time Dialogue Translation GAMETRANSLATOR Rea-meLo Capture Settings (Milestone
+VI: Trình dịch trò chơi Dịch đối thoại trong thời gian thực GAMETRANSLATOR Cài đặt chụp Rea-meLo (Cột mốc
+---
+
+[11:24:05]
+EN: hung mau prompt maucl Tep Chinh sua Dangxem hi, how you. My Tuan, are name fron
+VI: hung mau nhắc maucl Tep Chính sua Dangxem xin chào, bạn khỏe không. Mỹ Tuân, được ghi tên từ trước
+---
+
+[11:24:15]
+EN: GameIransl TOT Real-timeDialoguelranslation hung mauprompt mau cl TepAΛChinhstaNSLDangxem Real-Time hi,phow areryoumiMytDame) Tuan, fron
+VI: GameIransl TOT Real-timeDialogueranslation hung mauprompt mau cl TepAΛChinhstaNSLDangxem Real-Time hi,phow areryoumiMytDame) Tuan, fron
+---
+
+[11:24:15]
+EN: Game Translator Real-time Dialogue Translation GAMETRANSLATOR Real-TimeLo Capture Settings (Milestone
+VI: Game Translator Dịch hội thoại trong thời gian thực GAMETRANSLATOR Cài đặt chụp Lo thời gian thực (Cột mốc
+---
+
